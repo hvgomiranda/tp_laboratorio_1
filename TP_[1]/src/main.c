@@ -11,12 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <Windows.h>
 #include "header.h"
 
 int main(void) {
 
-	int eleccion;
-	int subEleccion;
+	int eleccion, subEleccion;
 	float precioDebitoAerolineas, precioDebitoLatam, precioCreditoAerolineas, precioCreditoLatam, precioBitcoinAerolineas, precioBitcoinLatam, precioUnitarioAerolineas, precioUnitarioLatam, diferencia;
 	int kilometros=0;
 	float precioAerolineas=0;
@@ -76,8 +76,8 @@ int main(void) {
 				diferencia =  diferenciaDePrecios(precioAerolineas, precioLatam);
 				costosCalculados=1;
 				system("cls");
-				printf("Precios calculados!\n");
-				sleep(2);
+				printf("Precios calculados\n");
+				system("pause");
 			}
 			else
 			{
@@ -92,19 +92,21 @@ int main(void) {
 			{
 				system("cls");
 
-				printf("Aerolineas\n");
-				printf("Precio con tarjeta de debito: %f\n", precioDebitoAerolineas);
-				printf("Precio con tarjeta de credito: %f\n", precioCreditoAerolineas);
+				printf("Kilometros: %d\n\n", kilometros);
+
+				printf("Precios Aerolineas: %.2f\n", precioAerolineas);
+				printf("Precio con tarjeta de debito: %.2f\n", precioDebitoAerolineas);
+				printf("Precio con tarjeta de credito: %.2f\n", precioCreditoAerolineas);
 				printf("Precio pagando con bitcoin: %f\n", precioBitcoinAerolineas);
-				printf("Precio por kilometro (precio unitario): %f\n\n", precioUnitarioAerolineas);
+				printf("Precio por kilometro (precio unitario): %.2f\n\n", precioUnitarioAerolineas);
 
-				printf("LATAM\n");
-				printf("Precio con tarjeta de debito: %f\n", precioDebitoLatam);
-				printf("Precio con tarjeta de credito: %f\n", precioCreditoLatam);
+				printf("Precio LATAM: %.2f\n", precioLatam);
+				printf("Precio con tarjeta de debito: %.2f\n", precioDebitoLatam);
+				printf("Precio con tarjeta de credito: %.2f\n", precioCreditoLatam);
 				printf("Precio pagando con bitcoin: %f\n", precioBitcoinLatam);
-				printf("Precio por kilometro (precio unitario): %f\n\n", precioUnitarioLatam);
+				printf("Precio por kilometro (precio unitario): %.2f\n\n", precioUnitarioLatam);
 
-				printf("La diferencia de precios es de %f\n\n", diferenciaDePrecios);
+				printf("La diferencia de precios es de %.2f\n\n", diferencia);
 
 				system("pause");
 			}
@@ -116,7 +118,7 @@ int main(void) {
 
 		case 5:
 			system("cls");
-			printf("Estas seguro de querer hacer una carga forzada (s/n)? Sobrescribira los datos ingresados manualmente ");
+			printf("La carga forzada sobrescribira los datos ingresados manualmente.\nEstas seguro de querer hacer esta accion (s/n)? ");
 			fflush(stdin);
 			scanf("%c", &decisionCargaForzada);
 			decisionCargaForzada = tolower(decisionCargaForzada);
@@ -148,6 +150,7 @@ int main(void) {
 			{
 				system("cls");
 				printf("Carga forzada cancelada");
+				system("pause");
 			}
 			break;
 
@@ -155,23 +158,28 @@ int main(void) {
 			system("cls");
 			printf("Estas seguro de salir del programa (s/n)? ");
 			fflush(stdin);
-			scanf("%c", decisionSalida);
+			scanf("%c", &decisionSalida);
 			decisionSalida = tolower(decisionSalida);
 			while(decisionSalida!='s'&&decisionSalida!='n')
 			{
+				system("cls");
 				printf("Error. Ingrese nuevamente 's' si desea salir, 'n' si desea cancelar: ");
 				fflush(stdin);
-				scanf("%c", decisionSalida);
+				scanf("%c", &decisionSalida);
 				decisionSalida = tolower(decisionSalida);
 			}
 			if(decisionSalida=='s')
 			{
+				system("cls");
+				printf("Gracias por usar este programa\n");
+				Sleep(1500);
 				eleccion = 6;
 			}
 			else
 			{
 				system("cls");
-				printf("Salida cancelada");
+				printf("Salida cancelada\n");
+				system("pause");
 				eleccion = 1;
 			}
 			break;

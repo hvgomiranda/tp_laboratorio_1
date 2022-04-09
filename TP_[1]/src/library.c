@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <Windows.h>
 #include "header.h"
 
 
@@ -25,15 +26,15 @@ int menu(int kilometros, float precioAerolineas, float precioLatam)
 	}
 	else if(!precioAerolineas)
 	{
-		printf("2. Ingresar el precio del vuelo de Aerolineas\n");
+		printf("2. Ingresar el precio del vuelo de Aerolineas (LATAM: %.2f)\n", precioLatam);
 	}
 	else if(!precioLatam)
 	{
-		printf("2. Ingresar el precio del vuelo de LATAM\n");
+		printf("2. Ingresar el precio del vuelo de LATAM (Aerolineas: %.2f)\n", precioAerolineas);
 	}
 	else
 	{
-		printf("2. Reingresar el precio de los vuelos (Aerolineas: %f / LATAM: %f)\n", precioAerolineas, precioLatam);
+		printf("2. Reingresar el precio de los vuelos (Aerolineas: %.2f / LATAM: %.2f)\n", precioAerolineas, precioLatam);
 	}
 
 	printf("3. Calcular todos los costos\n");
@@ -58,7 +59,7 @@ int subMenu(float precioAerolineas, float precioLatam)
 	}
 	else
 	{
-		printf("1. Reingrese el precio de Aerolineas (precio ingresado: %f)\n", precioAerolineas);
+		printf("1. Reingrese el precio de Aerolineas (precio ingresado: %.2f)\n", precioAerolineas);
 	}
 
 	if(!precioLatam)
@@ -67,8 +68,9 @@ int subMenu(float precioAerolineas, float precioLatam)
 	}
 	else
 	{
-		printf("2. Reingrese el precio de LATAM (precio ingresado: %f)\n", precioLatam);
+		printf("2. Reingrese el precio de LATAM (precio ingresado: %.2f)\n", precioLatam);
 	}
+	printf("3. Salir\n\n");
 
 	printf("Ingrese la opcion elegida: ");
 	scanf("%d", &eleccion);
@@ -91,6 +93,7 @@ float precioCredito(float precio)
 float precioBitcoin(float precio)
 {
 	precio = precio/4606954.55;
+	return precio;
 }
 
 float precioUnitario(float precio, int kilometros)
@@ -102,13 +105,11 @@ float precioUnitario(float precio, int kilometros)
 float diferenciaDePrecios(float precioAerolineas, float precioLatam)
 {
 	float diferencia;
-	if(precioAerolineas>precioLatam)
+
+	diferencia = precioAerolineas - precioLatam;
+	if(diferencia<0)
 	{
-		diferencia = precioAerolineas - precioLatam;
-	}
-	else
-	{
-		diferencia = precioLatam - precioAerolineas;
+		diferencia=diferencia*-1;
 	}
 	return diferencia;
 }
