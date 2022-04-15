@@ -8,6 +8,7 @@
  ============================================================================
  */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -18,7 +19,7 @@ int main(void) {
 
 	int eleccion, subEleccion;
 	float precioDebitoAerolineas, precioDebitoLatam, precioCreditoAerolineas, precioCreditoLatam, precioBitcoinAerolineas, precioBitcoinLatam, precioUnitarioAerolineas, precioUnitarioLatam, diferencia;
-	int kilometros=0;
+	float kilometros=0;
 	float precioAerolineas=0;
 	float precioLatam=0;
 	int costosCalculados = 0;
@@ -32,9 +33,7 @@ int main(void) {
 		switch(eleccion)
 		{
 		case 1:
-			system("cls");
-			printf("Ingrese los kilometros: ");
-			scanf("%d", &kilometros);
+			kilometros = validacionNumeroPositivo("Ingrese la cantidad de kilometros:");
 			break;
 
 		case 2:
@@ -42,15 +41,11 @@ int main(void) {
 			switch(subEleccion)
 			{
 			case 1:
-				system("cls");
-				printf("Ingrese el precio de Aerolineas: ");
-				scanf("%f", &precioAerolineas);
+				precioAerolineas = validacionNumeroPositivo("Ingrese el precio de Aerolineas:");
 				break;
 
 			case 2:
-				system("cls");
-				printf("Ingrese el precio de LATAM: ");
-				scanf("%f", &precioLatam);
+				precioLatam = validacionNumeroPositivo("Ingrese el precio de LATAM:");
 				break;
 
 			case 3:
@@ -82,7 +77,7 @@ int main(void) {
 			else
 			{
 				system("cls");
-				printf("Falta ingresar algun dato para poder calcular los costos\n");
+				printf("Falta ingresar algun dato para poder calcular los costos\n\n");
 				system("pause");
 			}
 			break;
@@ -90,35 +85,21 @@ int main(void) {
 		case 4:
 			if(precioAerolineas&&precioLatam&&kilometros&&costosCalculados)
 			{
-				system("cls");
-
-				printf("Kilometros: %d\n\n", kilometros);
-
-				printf("Precios Aerolineas: %.2f\n", precioAerolineas);
-				printf("Precio con tarjeta de debito: %.2f\n", precioDebitoAerolineas);
-				printf("Precio con tarjeta de credito: %.2f\n", precioCreditoAerolineas);
-				printf("Precio pagando con bitcoin: %f\n", precioBitcoinAerolineas);
-				printf("Precio por kilometro (precio unitario): %.2f\n\n", precioUnitarioAerolineas);
-
-				printf("Precio LATAM: %.2f\n", precioLatam);
-				printf("Precio con tarjeta de debito: %.2f\n", precioDebitoLatam);
-				printf("Precio con tarjeta de credito: %.2f\n", precioCreditoLatam);
-				printf("Precio pagando con bitcoin: %f\n", precioBitcoinLatam);
-				printf("Precio por kilometro (precio unitario): %.2f\n\n", precioUnitarioLatam);
-
-				printf("La diferencia de precios es de %.2f\n\n", diferencia);
-
-				system("pause");
+				imprimirResultados(kilometros, precioAerolineas, precioDebitoAerolineas, precioCreditoAerolineas,
+						precioBitcoinAerolineas, precioUnitarioAerolineas, precioLatam, precioDebitoLatam,
+						precioCreditoLatam, precioBitcoinLatam, precioUnitarioLatam, diferencia);
 			}
 			else
 			{
-				printf("Error ");
+				system("cls");
+				printf("Falta ingresar algun dato para poder mostrar los resultados\n\n");
+				system("pause");
 			}
 			break;
 
 		case 5:
 			system("cls");
-			printf("La carga forzada sobrescribira los datos ingresados manualmente.\nEstas seguro de querer hacer esta accion (s/n)? ");
+			printf("Si cargo manualmente algun dato, la carga forzada lo sobrescribira.\n\nEstas seguro de querer hacer esta accion (s/n)? ");
 			fflush(stdin);
 			scanf("%c", &decisionCargaForzada);
 			decisionCargaForzada = tolower(decisionCargaForzada);
@@ -145,6 +126,9 @@ int main(void) {
 				precioUnitarioLatam = precioUnitario(precioLatam, kilometros);
 				diferencia =  diferenciaDePrecios(precioAerolineas, precioLatam);
 				costosCalculados=1;
+				imprimirResultados(kilometros, precioAerolineas, precioDebitoAerolineas, precioCreditoAerolineas,
+										precioBitcoinAerolineas, precioUnitarioAerolineas, precioLatam, precioDebitoLatam,
+										precioCreditoLatam, precioBitcoinLatam, precioUnitarioLatam, diferencia);
 			}
 			else
 			{
@@ -173,7 +157,6 @@ int main(void) {
 				system("cls");
 				printf("Gracias por usar este programa\n");
 				Sleep(1500);
-				eleccion = 6;
 			}
 			else
 			{
