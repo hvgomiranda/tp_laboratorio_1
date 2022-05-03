@@ -32,7 +32,7 @@ int validarNumeroRangos(int numero, int rangoMin, int rangoMax)
 {
 	int retorno;
 	retorno = 0;
-	if(!isdigit(numero)&&numero>rangoMin&&numero<=rangoMax)
+	if((!isdigit(numero))&&numero>rangoMin&&numero<=rangoMax)
 	{
 		retorno = 1;
 	}

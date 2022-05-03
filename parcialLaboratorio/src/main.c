@@ -54,6 +54,21 @@ int main(void)
 			}
 			break;
 		case 2:
+			if(modificarEstructura(listaAlbumes, TAM, listaGeneros, TAMGENERO, listaArtistas,
+					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA))
+			{
+				system("cls");
+				printf("Modificacion exitosa\n");
+				system("pause");
+			}
+			else
+			{
+				system("cls");
+				printf("Error al modificar el album\n");
+				system("pause");
+			}
+			break;
+		case 3:
 			if(bajaEstructura(listaAlbumes, TAM, &proximoCodigo, listaGeneros, TAMGENERO, listaArtistas,
 					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA))
 
@@ -69,27 +84,85 @@ int main(void)
 				system("pause");
 			}
 			break;
-		case 3:
-			if(modificarEstructura(listaAlbumes, TAM, listaGeneros, TAMGENERO, listaArtistas,
-					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA))
-			{
-				system("cls");
-				printf("Modificacion exitosa\n");
-				system("pause");
-			}
-			else
-			{
-				system("cls");
-				printf("Error al modificar el album\n");
-				system("pause");
-			}
-			break;
+
 		case 4:
-			mostrarAlbumes(listaAlbumes, TAM, listaGeneros, TAMGENERO,
-					listaArtistas, TAMARTISTAS, &codigoG, &codigoA);
-			system("pause");
+			do
+			{
+				switch(subMenuInformar())
+				{
+				case 'A':
+					importePromedio(listaAlbumes, TAM);
+					break;
+				case 'B':
+					albumesViejitos(listaAlbumes, TAM);
+					break;
+				case 'C':
+					system("cls");
+					printf("Saliste del menu de informes.\n");
+					system("pause");
+					break;
+				default:
+					system("cls");
+					printf("Error, elija nuevamente.\n");
+					system("pause");
+					break;
+				}
+			}while(subMenuInformar()!='C');
 			break;
 		case 5:
+			do
+			{
+				switch(subMenuListar())
+				{
+				case 'A':
+					mostrarGeneros(listaGeneros, TAMGENERO);
+					break;
+				case 'B':
+					mostrarTipoArtistas(listaTipoArtista, TAMTIPOARTISTAS);
+					break;
+				case 'C':
+					mostrarArtistas(listaArtistas, TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoTA);
+					break;
+				case 'D':
+					mostrarAlbumes(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
+					system("pause");
+					break;
+				case 'E':
+
+					break;
+				case 'F':
+					mostrarAlbumesViejitos(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
+					system("pause");
+					break;
+				case 'G':
+					albumMasCaro(listaAlbumes, TAM);
+					system("pause");
+					break;
+				case 'H':
+
+					break;
+				case 'I':
+
+					break;
+				case 'J':
+					break;
+				case 'K':
+
+					break;
+				case 'L':
+					system("cls");
+					printf("Saliste del menu de listas.\n");
+					system("pause");
+					break;
+				default:
+					system("cls");
+					printf("Error, elija nuevamente.\n");
+					system("pause");
+					break;
+				}
+			}while(subMenuListar()!='L');
 			break;
 		case 6:
 			do{
