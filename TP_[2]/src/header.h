@@ -7,7 +7,7 @@
 
 #ifndef HEADER_H_
 #define HEADER_H_
-#define LEN 10
+#define LEN 2000
 
 //ESTRUCTURAS--------------------------------------------------------
 typedef struct
@@ -38,6 +38,8 @@ int modifyPassenger(Passenger* list, int len, int index);
 int removePassenger(Passenger* list, int len, int index);
 
 int sortPassengers(Passenger* list, int len, int order);
+int newOrder();
+int averagePrice(Passenger* list, int len);
 
 int showPassenger(Passenger* list, int index);
 int showPassengers(Passenger* list, int len);
@@ -46,6 +48,7 @@ int showPassengers(Passenger* list, int len);
 int validateString(char string[], int minSize, int maxSize);
 int validateFloat(float number, int minSize, int maxSize);
 int validateInt(int number, int minSize, int maxSize);
+int validateChar(char character, char optionA, char optionB);
 
 
 #endif /* HEADER_H_ */

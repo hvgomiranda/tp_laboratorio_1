@@ -16,10 +16,11 @@
 
 int main()
 {
-    int subEleccion;
+    int subContinuar;
     int indexToRemove;
     int indexToModify;
     int id=1;
+    int order;
     int continuar = 1;
     Passenger aPassenger;
     Passenger list[LEN];
@@ -50,42 +51,67 @@ int main()
 
         case 2:
         	indexToModify = findPassengerById(list, LEN);
-        	modifyPassenger(list, LEN, indexToModify);
-			break;
-
-        case 3:
-        	do{
-				indexToRemove = findPassengerById(list, LEN);
-				if(indexToRemove==-1)
+			if(indexToModify==-1)
+			{
+				system("cls");
+				printf("No se ha encontrado el pasajero\n");
+				system("pause");
+			}
+			else
+			{
+				if(modifyPassenger(list, LEN, indexToModify))
 				{
 					system("cls");
-					printf("No se ha encontrado el pasajero\n");
+					printf("No se ha modificado ningun pasajero\n");
 					system("pause");
 				}
 				else
 				{
-					removePassenger(list, LEN, indexToRemove);
-					//agregar las validaciones y qué se hace con los retornos
+					system("cls");
+					printf("Modificacion exitosa\n");
+					system("pause");
 				}
 
+			}
+			break;
 
-        	}while();
+        case 3:
+			indexToRemove = findPassengerById(list, LEN);
+			if(indexToRemove==-1)
+			{
+				system("cls");
+				printf("No se ha encontrado el pasajero\n");
+				system("pause");
+			}
+			else
+			{
+				if(removePassenger(list, LEN, indexToRemove))
+				{
+					system("cls");
+					printf("No se ha eliminado ningun pasajero\n");
+					system("pause");
+				}
+				else
+				{
+					system("cls");
+					printf("Eliminacion exitosa\n");
+					system("pause");
+				}
 
-
-
+			}
 			break;
 
         case 4:
 			do{
-				subEleccion = subMenu();
-				switch(subEleccion)
+				switch(subMenu())
 				{
 				case 1:
-				printf("informar 1\n");
+				order = newOrder();
+				sortPassengers(list, LEN, order);
 				break;
 
 				case 2:
-				printf("informar 2\n");
+				averagePrice(list, LEN);
 				break;
 
 				case 3:
@@ -93,14 +119,19 @@ int main()
 				break;
 
 				case 4:
-				printf("informar 4\n");
+				system("cls");
+				printf("Saliste del submenu\n\n");
+				subContinuar = 0;
+				system("pause");
 				break;
 
 				default:
+				system("cls");
 				printf("Error, elija nuevamente\n");
+				system("pause");
 				break;
 				}
-			}while(subEleccion!=4);
+			}while(subContinuar);
 			break;
 
         case 5:

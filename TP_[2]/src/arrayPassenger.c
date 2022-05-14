@@ -124,7 +124,7 @@ int findPassengerById(Passenger* list, int len)
 			do{
 				printf("Elija un id: ");
 				scanf("%d", &idFound);
-			}while(!validateInteger(idFound, 0, len+1));
+			}while(!validateInt(idFound, 0, len+1));
 
 			for(int i=0;i<len;i++)
 			{
@@ -150,76 +150,84 @@ int modifyPassenger(Passenger* list, int len, int index)
 	float auxFloat;
 	int auxInteger;
 
-	while (continuar)
+	if(list!=NULL&&len>0)
 	{
-		printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
-		printf("---------------------------------------\n");
-		showPassenger(list[index]);
-		printf("---------------------------------------\n");
-		printf("1. Modificar nombre\n");
-		printf("2. Modificar apellido\n");
-		printf("3. Modificar precio del vuelo\n");
-		printf("4. Modificar el codigo de vuelo\n");
-		printf("5. Modificar el tipo de pasajero\n");
-		printf("6. Salir\n");
-		printf("Ingrese opcion: ");
-		scanf("%d", &option);
-
-		switch (option)
+		ok=1;
+		do
 		{
-		case 1:
-			do{
-				printf("Ingrese el nombre del pasajero: ");
-				fflush(stdin);
-				gets(auxString);
-			}while(!validateString(auxString, 2, 51));
-			printf("%s\n", auxString);
-			strcpy(list->name,auxString);
-			break;
+			printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
+			printf("---------------------------------------\n");
+			showPassenger(list, index);
+			printf("---------------------------------------\n");
+			printf("1. Modificar nombre\n");
+			printf("2. Modificar apellido\n");
+			printf("3. Modificar precio del vuelo\n");
+			printf("4. Modificar el codigo de vuelo\n");
+			printf("5. Modificar el tipo de pasajero\n");
+			printf("6. Salir\n");
+			printf("Ingrese opcion: ");
+			scanf("%d", &option);
 
-		case 2:
-			do{
-				printf("Ingrese el apellido del pasajero: ");
-				fflush(stdin);
-				gets(auxString);
-			}while(!validateString(auxString, 1, 51));
-			strcpy(list->lastName,auxString);
-			break;
+			switch (option)
+			{
+			case 1:
+				do{
+					printf("Ingrese el nombre del pasajero: ");
+					fflush(stdin);
+					gets(auxString);
+					ok=0;
+				}while(!validateString(auxString, 2, 51));
+				printf("%s\n", auxString);
+				strcpy(list->name,auxString);
+				break;
 
-		case 3:
-			do{
-				printf("Ingrese el precio del vuelo: ");
-				scanf("%f", &auxFloat);
-			}while(!validateFloat(auxFloat, 0, 9999999));
-			list->price = auxFloat;
-			break;
+			case 2:
+				do{
+					printf("Ingrese el apellido del pasajero: ");
+					fflush(stdin);
+					gets(auxString);
+					ok=0;
+				}while(!validateString(auxString, 1, 51));
+				strcpy(list->lastName,auxString);
+				break;
 
-		case 4:
-			do{
-				printf("Ingrese el codigo del vuelo: ");
-				fflush(stdin);
-				gets(auxString);
-			}while(!validateString(auxString, 0, 10));
-			strcpy(list->flycode,auxString);
-			break;
+			case 3:
+				do{
+					printf("Ingrese el precio del vuelo: ");
+					scanf("%f", &auxFloat);
+					ok=0;
+				}while(!validateFloat(auxFloat, 0, 9999999));
+				list->price = auxFloat;
+				break;
 
-		case 5:
-			do{
-				printf("Ingrese el tipo de pasajero: ");
-				scanf("%d", &auxInteger);
-			}while(!validateFloat(auxInteger, 0, 5));
-			list->typePassenger = auxInteger;
-			break;
+			case 4:
+				do{
+					printf("Ingrese el codigo del vuelo: ");
+					fflush(stdin);
+					gets(auxString);
+					ok=0;
+				}while(!validateString(auxString, 0, 10));
+				strcpy(list->flycode,auxString);
+				break;
 
-		case 6:
-			continuar = 0;
-			ok = 0;
-			break;
+			case 5:
+				do{
+					printf("Ingrese el tipo de pasajero: ");
+					scanf("%d", &auxInteger);
+					ok=0;
+				}while(!validateFloat(auxInteger, 0, 5));
+				list->typePassenger = auxInteger;
+				break;
 
-		default:
-			printf("Ingrese una opcion valida\n");
-			break;
-		}
+			case 6:
+				continuar = 0;
+				break;
+
+			default:
+				printf("Ingrese una opcion valida\n");
+				break;
+			}
+		}while(continuar);
 	}
 
 	return ok;
@@ -303,6 +311,45 @@ int sortPassengers(Passenger* list, int len, int order)
 	return ok;
 }
 
+int averagePrice(Passenger* list, int len)
+{
+	int ok=-1;
+	int total;
+	float totalPrecios;
+	float promedioPrecios;
+	int totalPreciosArribaDelPromedio;
+
+
+	if(list!=NULL && len>0)
+	{
+		ok=0;
+		for (int i=0; i<len; i++)
+		{
+			if(!list[i].isEmpty)
+			{
+				total++;
+				totalPrecios += list[i].price;
+			}
+		}
+
+		promedioPrecios = (float) total / totalPrecios;
+
+		for (int i=0; i<len; i++)
+		{
+			if(!list[i].isEmpty && list[i].price > promedioPrecios)
+			{
+				totalPreciosArribaDelPromedio++;
+			}
+		}
+		system("cls");
+		printf("El total de precios es de %f.2\n", totalPrecios);
+		printf("El promedio de precios es de %f.2\n", promedioPrecios);
+		printf("Hay %d vuelos que costaron mas que el promedio\n", totalPreciosArribaDelPromedio);
+		system("pause");
+	}
+	return ok;
+}
+
 int findEmpty(Passenger* list, int len)
 {
 	int index = -1;
@@ -357,4 +404,19 @@ int showPassengers(Passenger* list, int len)
 
 	}
 	return ok;
+}
+
+int newOrder()
+{
+	int order;
+	system("cls");
+	printf("Desea ordenar ascendente o descendentemente? (1 para asc/0 para desc");
+	scanf("%d", &order);
+	while(order!=0 && order!=1)
+	{
+		system("cls");
+		printf("Error. Elija nuevamente (1 para asc/0 para desc) ");
+        scanf("%d", &order);
+	}
+	return order;
 }
