@@ -125,13 +125,13 @@ int buscarAlbumPorCodigo(eAlbum album[], int tam, int codigo)
 				retorno=1;
 				break;
 			}
-			else
-			{
-				system("cls");
-				printf("Codigo no encontrado");
-				system("pause");
-			}
 		}
+	}
+	if(!retorno)
+	{
+		system("cls");
+		printf("Codigo no encontrado");
+		system("pause");
 	}
 	return retorno;
 }
@@ -477,4 +477,3 @@ eFecha cargarFecha()
 
 	return fecha;
 }
-

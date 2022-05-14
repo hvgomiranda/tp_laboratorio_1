@@ -70,8 +70,9 @@ char subMenuListar()
 	printf("J. EL album o los albumes mas caros\n");
 	printf("K. Listar todo\n");
 	printf("L. Salir\n");
+	printf("Elija una opcion: ");
 	fflush(stdin);
-	scanf(" %c", &eleccion);
+	scanf("%c", &eleccion);
 	eleccion = toupper(eleccion);
 	while(!validarCaracter(eleccion))
 	{
@@ -90,8 +91,9 @@ char subMenuInformar()
 	printf("A. Total y promedio de los importes. Cuantos albumes superan el promedio.\n");
 	printf("B. Cantidad de albumes cuya fecha de publicacion es anterior a 1/1/2000\n");
 	printf("C. Salir\n");
+	printf("Elija una opcion: ");
 	fflush(stdin);
-	scanf(" %c", &eleccion);
+	scanf("%c", &eleccion);
 	eleccion = toupper(eleccion);
 	while(!validarCaracter(eleccion))
 	{
@@ -120,7 +122,6 @@ void mostrarTipoArtistas(eTipoArtista listaTiposArtistas[], int tam)
 			printf("-----------------------------------\n");
 		}
 	}
-	system("pause");
 }
 
 void mostrarGeneros(eGenero listaGeneros[], int tam)
@@ -139,7 +140,6 @@ void mostrarGeneros(eGenero listaGeneros[], int tam)
 			printf("-----------------------------------\n");
 		}
 	}
-	system("pause");
 }
 
 void mostrarArtistas(eArtista listaArtistas[], int tam, eTipoArtista listaTipoArtista[], int tamTipoArtista, int* codigoTA)
@@ -161,7 +161,6 @@ void mostrarArtistas(eArtista listaArtistas[], int tam, eTipoArtista listaTipoAr
 			printf("-----------------------------------\n");
 		}
 	}
-	system("pause");
 }
 
 void mostrarAlbum(eAlbum album[], int tam, int indice, eGenero listaGeneros[], int tamGenero,

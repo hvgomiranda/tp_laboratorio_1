@@ -92,6 +92,8 @@ int validarNumeroRangos(int numero, int rangoMin, int rangoMax);
 int validarCaracterOpciones(char caracter, char opcionA, char opcionB);
 int validarCaracter(char caracter);
 int validarCadena(char cadena[], int tam);
+
+
 //PROTOTIPOS---------------------------------------------------------------------------------------------------------
 
 #endif /* HEADER_H_ */

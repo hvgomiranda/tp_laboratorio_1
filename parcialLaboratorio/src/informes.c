@@ -83,8 +83,7 @@ void mostrarAlbumesViejitos(eAlbum albumes[], int tam, eGenero listaGeneros[], i
 			if(albumes[i].estado==OCUPADO)
 			{
 				sinAlbumes = 0;
-				mostrarAlbum(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, &codigoA, &codigoG);
-				printf("---------------------------------------------------------\n");
+				mostrarAlbumViejito(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, &codigoA, &codigoG);
 			}
 		}
 	}
@@ -133,8 +132,7 @@ void mostrarAlbumesCaros(eAlbum albumes[], int tam, eGenero listaGeneros[], int 
 			if(albumes[i].estado==OCUPADO)
 			{
 				sinAlbumes = 0;
-				mostrarAlbum(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, &codigoA, &codigoG);
-				printf("---------------------------------------------------------\n");
+				mostrarAlbumCaro(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, &codigoA, &codigoG);
 			}
 		}
 	}
@@ -186,8 +184,8 @@ void mostrarAlbumCaro(eAlbum album[], int tam, int indice, eGenero listaGeneros[
 
 void albumMasCaro(eAlbum album[], int tam)
 {
-	char albumesMasCaros[20][51];
-	char albumMasCaro;
+	char albumesMasCaros[][51];
+	int albumMasCaro;
 	if(album!=NULL&&tam>0)
 	{
 		for(int i=0;i<tam;i++)
@@ -195,12 +193,8 @@ void albumMasCaro(eAlbum album[], int tam)
 			if(albumMasCaro=0||albumMasCaro>album[i].importe)
 			{
 				strcpy(albumesMasCaros[i],album[i].titulo);
+				printf("El album mas caro es %s", albumesMasCaros[i]);
 			}
 		}
-		for(int i=0; i<20; i++)
-		{
-			printf("El album mas caro es %s", albumesMasCaros[i]);
-		}
 	}
-
 }

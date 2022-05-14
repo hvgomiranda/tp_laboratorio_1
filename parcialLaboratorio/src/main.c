@@ -49,7 +49,7 @@ int main(void)
 			else
 			{
 				system("cls");
-				printf("Error al dar de alta el album\n");
+				printf("No se ha dado de alta ningun album\n");
 				system("pause");
 			}
 			break;
@@ -64,7 +64,7 @@ int main(void)
 			else
 			{
 				system("cls");
-				printf("Error al modificar el album\n");
+				printf("No se ha modificado ningun album\n");
 				system("pause");
 			}
 			break;
@@ -80,7 +80,7 @@ int main(void)
 			else
 			{
 				system("cls");
-				printf("Error al dar de baja el album\n");
+				printf("No se ha dado de baja ningun album\n");
 				system("pause");
 			}
 			break;
@@ -116,12 +116,15 @@ int main(void)
 				{
 				case 'A':
 					mostrarGeneros(listaGeneros, TAMGENERO);
+					system("pause");
 					break;
 				case 'B':
 					mostrarTipoArtistas(listaTipoArtista, TAMTIPOARTISTAS);
+					system("pause");
 					break;
 				case 'C':
 					mostrarArtistas(listaArtistas, TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoTA);
+					system("pause");
 					break;
 				case 'D':
 					mostrarAlbumes(listaAlbumes, TAM, listaGeneros, TAMGENERO,
@@ -137,7 +140,8 @@ int main(void)
 					system("pause");
 					break;
 				case 'G':
-					albumMasCaro(listaAlbumes, TAM);
+					mostrarAlbumesCaros(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+								listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
 					system("pause");
 					break;
 				case 'H':
@@ -147,6 +151,8 @@ int main(void)
 
 					break;
 				case 'J':
+					albumMasCaro(listaAlbumes, TAM);
+					system("pause");
 					break;
 				case 'K':
 
