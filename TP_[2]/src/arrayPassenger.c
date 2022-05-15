@@ -157,6 +157,7 @@ int modifyPassenger(Passenger* list, int len, int index)
 		ok=1;
 		do
 		{
+			system("cls");
 			printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
 			printf("---------------------------------------\n");
 			showPassenger(list, index);
@@ -329,22 +330,22 @@ int averagePrice(Passenger* list, int len)
 			if(!list[i].isEmpty)
 			{
 				total++;
-				totalPrecios += list[i].price;
+				totalPrecios += (list+i)->price;
 			}
 		}
 
-		promedioPrecios = (float) total / totalPrecios;
+		promedioPrecios =  totalPrecios/total;
 
 		for (int i=0; i<len; i++)
 		{
-			if(!list[i].isEmpty && list[i].price > promedioPrecios)
+			if((list+i)->isEmpty == 0 && ((list+i)->price > promedioPrecios))
 			{
 				totalPreciosArribaDelPromedio++;
 			}
 		}
 		system("cls");
-		printf("El total de precios es de %f.2\n", totalPrecios);
-		printf("El promedio de precios es de %f.2\n", promedioPrecios);
+		printf("El total de precios es de %.2f\n", totalPrecios);
+		printf("El promedio de precios es de %.2f\n", promedioPrecios);
 		printf("Hay %d vuelos que costaron mas que el promedio\n", totalPreciosArribaDelPromedio);
 		system("pause");
 	}
@@ -376,12 +377,13 @@ int showPassenger(Passenger* list, int index)
 	if(list != NULL)
 	{
 		ok = 0;
-		printf("%d %s %s %.2f %d %s\n",(list+index)->id,
-									   (list+index)->name,
-									   (list+index)->lastName,
-									   (list+index)->price,
-									   (list+index)->typePassenger,
-									   (list+index)->flycode);
+		printf("%d   %3s   %3s   $%5.2f  %1d   %5s\n",
+										(list+index)->id,
+										(list+index)->name,
+										(list+index)->lastName,
+										(list+index)->price,
+										(list+index)->typePassenger,
+										(list+index)->flycode);
 	}
 	return ok;
 }
@@ -393,10 +395,10 @@ int showPassengers(Passenger* list, int len)
 	{
 		ok = 0;
 		system("cls");
-		printf("---------------------------------------\n");
-		printf("----------------PASAJERO---------------\n");
-		printf("---------------------------------------\n");
-		printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
+		printf("--------------------------------------------\n");
+		printf("-------------------PASAJERO-----------------\n");
+		printf("--------------------------------------------\n");
+		printf("ID  NOMBRE  APELLIDO   PRECIO    TIPO  VUELO\n");
 		for(int i=0;i<len;i++)
 		{
 			if(!list[i].isEmpty)
@@ -414,7 +416,7 @@ int newOrder()
 {
 	int order;
 	system("cls");
-	printf("Desea ordenar ascendente o descendentemente? (1 para asc/0 para desc");
+	printf("Desea ordenar ascendente o descendentemente? (1 para asc/0 para desc) ");
 	scanf("%d", &order);
 	while(order!=0 && order!=1)
 	{

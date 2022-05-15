@@ -16,6 +16,8 @@
 
 int main()
 {
+	setbuf(stdout, NULL);
+
     int subContinuar;
     int indexToRemove;
     int indexToModify;
@@ -26,8 +28,6 @@ int main()
     Passenger aPassenger;
     Passenger list[LEN];
     initPassengers(list, LEN);
-
-    setbuf(stdout, NULL);
 
     do
     {
@@ -123,36 +123,48 @@ int main()
 			break;
 
         case 4:
-			do{
-				switch(subMenu())
-				{
-				case 1:
-				order = newOrder();
-				sortPassengers(list, LEN, order);
-				break;
+        	if(passengersSize)
+        	{
+				do{
+					switch(subMenu())
+					{
+					case 1:
+					order = newOrder();
+					sortPassengers(list, LEN, order);
+					showPassengers(list, LEN);
+					printf("\n\n");
+					system("pause");
+					break;
 
-				case 2:
-				averagePrice(list, LEN);
-				break;
+					case 2:
+					averagePrice(list, LEN);
+					break;
 
-				case 3:
-				printf("informar 3\n");
-				break;
+					case 3:
+					printf("informar 3\n");
+					break;
 
-				case 4:
+					case 4:
+					system("cls");
+					printf("Saliste del submenu\n\n");
+					subContinuar = 0;
+					system("pause");
+					break;
+
+					default:
+					system("cls");
+					printf("Error, elija nuevamente\n");
+					system("pause");
+					break;
+					}
+				}while(subContinuar);
+        	}
+        	else
+        	{
 				system("cls");
-				printf("Saliste del submenu\n\n");
-				subContinuar = 0;
+				printf("No se ha ingresado ningun pasajero\n");
 				system("pause");
-				break;
-
-				default:
-				system("cls");
-				printf("Error, elija nuevamente\n");
-				system("pause");
-				break;
-				}
-			}while(subContinuar);
+        	}
 			break;
 
         case 5:
