@@ -48,7 +48,6 @@ int newPassenger(Passenger* aPassenger)
 			fflush(stdin);
 			gets(auxString);
 		}while(!validateString(auxString, 2, 51));
-		printf("%s\n", auxString);
 		strcpy(aPassenger->name,auxString);
 
 		do{
@@ -99,11 +98,14 @@ int addPassenger(Passenger* list, int len, int id, char name[], char lastName[],
     	(list+index)->typePassenger = typePassenger;
     	strcpy((list+index)->flycode, flycode);
     	(list+index)->isEmpty = 0;
+    	system("cls");
 		printf("---------------------------------------\n");
 		printf("----------------PASAJERO---------------\n");
 		printf("---------------------------------------\n");
 		printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
 		showPassenger(list, index);
+		printf("\n\nAlta exitosa\n\n");
+		system("pause");
     }
 
     return ok;
@@ -177,7 +179,6 @@ int modifyPassenger(Passenger* list, int len, int index)
 					gets(auxString);
 					ok=0;
 				}while(!validateString(auxString, 2, 51));
-				printf("%s\n", auxString);
 				strcpy(list->name,auxString);
 				break;
 
@@ -242,11 +243,11 @@ int removePassenger(Passenger* list, int len, int index)
 	if(list!=NULL && len>0 && index>0)
 	{
 		system("cls");
-		printf("va a eliminar el pasajero: \n");
+		printf("va a eliminar el pasajero: \n\n");
 		showPassenger(list, index);
 
 		do{
-			printf("\nEsta seguro? (s/n)");
+			printf("\nEsta seguro? (s/n) ");
 			fflush(stdin);
 			input = getchar();
 			input = tolower(input);
@@ -314,10 +315,10 @@ int sortPassengers(Passenger* list, int len, int order)
 int averagePrice(Passenger* list, int len)
 {
 	int ok=-1;
-	int total;
-	float totalPrecios;
+	int total=0;
+	float totalPrecios=0;
 	float promedioPrecios;
-	int totalPreciosArribaDelPromedio;
+	int totalPreciosArribaDelPromedio=0;
 
 
 	if(list!=NULL && len>0)
@@ -398,8 +399,11 @@ int showPassengers(Passenger* list, int len)
 		printf("ID NOMBRE APELLIDO  PRECIO  TIPO  VUELO\n");
 		for(int i=0;i<len;i++)
 		{
-			showPassenger(list, i);
-			printf("---------------------------------------\n");
+			if(!list[i].isEmpty)
+			{
+				showPassenger(list, i);
+				printf("---------------------------------------\n");
+			}
 		}
 
 	}

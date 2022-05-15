@@ -22,6 +22,7 @@ int main()
     int id=1;
     int order;
     int continuar = 1;
+    int passengersSize=0;
     Passenger aPassenger;
     Passenger list[LEN];
     initPassengers(list, LEN);
@@ -39,6 +40,7 @@ int main()
 				if(!addPassenger(list, LEN, aPassenger.id, aPassenger.name, aPassenger.lastName, aPassenger.price, aPassenger.typePassenger, aPassenger.flycode))
 				{
 					id++;
+					passengersSize++;
 				}
 			}
 			else
@@ -50,55 +52,74 @@ int main()
 			break;
 
         case 2:
-        	indexToModify = findPassengerById(list, LEN);
-			if(indexToModify==-1)
-			{
-				system("cls");
-				printf("No se ha encontrado el pasajero\n");
-				system("pause");
-			}
-			else
-			{
-				if(modifyPassenger(list, LEN, indexToModify))
+        	if(passengersSize)
+        	{
+				indexToModify = findPassengerById(list, LEN);
+				if(indexToModify==-1)
 				{
 					system("cls");
-					printf("No se ha modificado ningun pasajero\n");
+					printf("No se ha encontrado el pasajero\n");
 					system("pause");
 				}
 				else
 				{
-					system("cls");
-					printf("Modificacion exitosa\n");
-					system("pause");
-				}
+					if(modifyPassenger(list, LEN, indexToModify))
+					{
+						system("cls");
+						printf("No se ha modificado ningun pasajero\n");
+						system("pause");
+					}
+					else
+					{
+						system("cls");
+						printf("Modificacion exitosa\n");
+						system("pause");
+					}
 
-			}
+				}
+        	}
+        	else
+        	{
+				system("cls");
+				printf("No se ha ingresado ningun pasajero\n");
+				system("pause");
+        	}
 			break;
 
         case 3:
-			indexToRemove = findPassengerById(list, LEN);
-			if(indexToRemove==-1)
-			{
-				system("cls");
-				printf("No se ha encontrado el pasajero\n");
-				system("pause");
-			}
-			else
-			{
-				if(removePassenger(list, LEN, indexToRemove))
+        	if(passengersSize)
+        	{
+				indexToRemove = findPassengerById(list, LEN);
+				if(indexToRemove==-1)
 				{
 					system("cls");
-					printf("No se ha eliminado ningun pasajero\n");
+					printf("No se ha encontrado el pasajero\n");
 					system("pause");
 				}
 				else
 				{
-					system("cls");
-					printf("Eliminacion exitosa\n");
-					system("pause");
-				}
+					if(removePassenger(list, LEN, indexToRemove))
+					{
+						system("cls");
+						printf("No se ha eliminado ningun pasajero\n");
+						system("pause");
+					}
+					else
+					{
+						system("cls");
+						printf("Eliminacion exitosa\n");
+						system("pause");
+						passengersSize--;
+					}
 
-			}
+				}
+        	}
+        	else
+        	{
+				system("cls");
+				printf("No se ha ingresado ningun pasajero\n");
+				system("pause");
+        	}
 			break;
 
         case 4:

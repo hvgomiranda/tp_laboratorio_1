@@ -7,6 +7,7 @@
 int menu()
 {
     int opcion;
+    system("cls");
     printf("1. Alta\n");
     printf("2. Modificar\n");
     printf("3. Baja\n");
