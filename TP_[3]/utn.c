@@ -16,14 +16,14 @@ int utn_getInteger(int* integer, char* message, int min, int max)
 	if(integer!=NULL && auxInteger!=NULL && message!=NULL)
 	{
 		isOk = 1;
-
-		printf("%s: ", message);
+		printf("%s", message);
 		scanf("%d", auxInteger);
 		while(*auxInteger<min || *auxInteger>max)
 		{
 			printf("Error.\n %s (minimo %d y maximo %d)", message, min, max);
 			scanf("%d", auxInteger);
 		}
+		printf("HOLA %d\n", *auxInteger);
 		*integer = *auxInteger;
 	}
 
@@ -98,4 +98,25 @@ int utn_validateChar(char string[])
     free(i);
 
     return isOk;
+}
+
+int ask(char* message)
+{
+    char input;
+
+    if(message != NULL)
+    {
+        printf("%s s/n: ", message);
+        fflush(stdin);
+        input = getchar();
+        input = tolower(input);
+        while (input != 'n' && input != 's')
+        {
+            printf("%s s/n: ", message);
+            fflush(stdin);
+            input = getchar();
+            input = tolower(input);
+        }
+    }
+    return input == 's';
 }

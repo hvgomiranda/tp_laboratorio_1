@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 #include "LinkedList.h"
 #include "Controller.h"
 #include "Passenger.h"
@@ -273,10 +275,53 @@ int controller_editPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_removePassenger(LinkedList* pArrayListPassenger)
 {
+	int isOk = 0;
+	int* id = (int*) malloc(sizeof(int));
+	int* index = (int*) malloc(sizeof(int));
+	Passenger* aPassenger;
 
-    return 1;
+	if(pArrayListPassenger!=NULL && id!=NULL && index!=NULL)
+	{
+		isOk=1;
+		controller_listPassenger(pArrayListPassenger);
+		utn_getInteger(id, "Ingrese el id: ", 1, 999999);
+		*index = controller_findPassengerById(pArrayListPassenger, *id);
+		while(*index==0)
+		{
+			utn_getInteger(id, "Ingrese el id: ", 1, 999999);
+			*index = controller_findPassengerById(pArrayListPassenger, *id);
+		}
+
+		if(*index > 0)
+		{
+			aPassenger = ll_get(pArrayListPassenger, *index);
+			if(aPassenger==NULL)
+			{
+				Passenger_printOne(aPassenger);
+				printf("\n\n");
+				if(ask("Eliminar al pasajero?"))
+				{
+					ll_remove(pArrayListPassenger, *index);
+					Passenger_delete(aPassenger);
+					printf("Baja realizada\n");
+					system("pause");
+					system("cls");
+				}
+				else
+				{
+					printf("Baja cancelada\n");
+					system("pause");
+					system("cls");
+				}
+			}
+		}
+	}
+
+	free(id);
+	free(index);
+
+	return isOk;
 }
-
 
 int controller_listPassenger(LinkedList* pArrayListPassenger)
 {
@@ -295,7 +340,6 @@ int controller_listPassenger(LinkedList* pArrayListPassenger)
 		}
     }
 
-
     return isOk;
 }
 
@@ -308,7 +352,78 @@ int controller_listPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_sortPassenger(LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int isOk = 0;
+	int* option = (int*) malloc(sizeof(int));
+	*option = 0;
+
+	if(pArrayListPassenger!=NULL && option!=NULL)
+	{
+		isOk=1;
+		while(*option != 9)
+		{
+			printf("Ordenar pasajeros\n\n");
+			printf("1. ID ascendente\n");
+			printf("2. ID descendente\n");
+			printf("3. NOMBRE ascendente\n");
+			printf("4. NOMBRE descendente\n");
+			printf("5. APELLIDO ascendente\n");
+			printf("6. APELLIDO descendente\n");
+			printf("7. PRECIO ascendente\n");
+			printf("8. PRECIO descendente\n");
+			printf("9. CODIGO DE VUELO ascendente\n");
+			printf("10. CODIGO DE VUELO descendente\n");
+			printf("11. TIPO DE PASAJERO ascendente\n");
+			printf("12. TIPO DE PASAJERO descendente\n");
+			printf("13. ESTADO DE VUELO ascendente\n");
+			printf("14. ESTADO DE VUELO descendente\n");
+			printf("15. SALIR\n\n");
+			printf("Elija una opcion: ");
+			fflush(stdin);
+			scanf("%d", option);
+
+			switch(*option)
+			{
+			case 1:
+
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			case 10:
+				break;
+			case 11:
+				break;
+			case 12:
+				break;
+			case 13:
+				break;
+			case 14:
+				break;
+			case 15:
+				break;
+			default:
+				break;
+			}
+		}
+
+
+	}
+
+	return isOk;
+
 }
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto).
@@ -388,7 +503,7 @@ int controller_getNextId(LinkedList* pArrayListPassenger)
 		*isOK = 1;
 		*size = ll_len(pArrayListPassenger);
 
-		for(int i = 0; i < *size; i++)
+		for(int i=0; i<*size; i++)
 		{
 			aPassenger = (Passenger*) ll_get(pArrayListPassenger, i);
 
@@ -412,4 +527,156 @@ int controller_getNextId(LinkedList* pArrayListPassenger)
 	free(index);
 
     return nextId;
+}
+
+int controller_compareIds(void* first, void* second)
+{
+	int idCompared;
+	int result;
+	int* firstId = (int*) malloc(sizeof(int));
+	int* secondId = (int*) malloc(sizeof(int));
+	Passenger* firstPassenger;
+	Passenger* secondPassenger;
+
+	if(first!=NULL && second!=NULL && firstId!=NULL && secondId!=NULL)
+	{
+		firstPassenger = (Passenger*) first;
+		secondPassenger = (Passenger*) second;
+
+		if(Passenger_getId(firstPassenger, firstId) && Passenger_getId(secondPassenger, secondId))
+		{
+			idCompared = *firstId - *secondId;
+		}
+		if(idCompared==0)
+		{
+			result = 0;
+		}
+		else if(idCompared>0)
+		{
+			result = 1;
+		}
+		else if(idCompared<0)
+		{
+			result = -1;
+		}
+	}
+
+	free(firstId);
+	free(secondId);
+
+	return result;
+}
+
+int controller_compareNames(void* first, void* second)
+{
+	int nameCompared;
+	int result;
+	char* firstName = (char*) malloc(sizeof(char)*51);
+	char* secondName = (char*) malloc(sizeof(char)*51);
+	Passenger* firstPassenger;
+	Passenger* secondPassenger;
+
+	if(first!=NULL && second!=NULL && firstName!=NULL && secondName!=NULL)
+	{
+		firstPassenger = (Passenger*) first;
+		secondPassenger = (Passenger*) second;
+
+		if(Passenger_getName(firstPassenger, firstName) && Passenger_getName(secondPassenger, secondName))
+		{
+			nameCompared = strcmp(firstName, secondName);
+		}
+		if(nameCompared==0)
+		{
+			result = 0;
+		}
+		else if(nameCompared>0)
+		{
+			result = 1;
+		}
+		else if(nameCompared<0)
+		{
+			result = -1;
+		}
+	}
+
+	free(firstName);
+	free(secondName);
+
+	return result;
+}
+
+int controller_compareLastNames(void* first, void* second)
+{
+	int lastNameCompared;
+	int result;
+	char* firstLastName = (char*) malloc(sizeof(char)*51);
+	char* secondLastName = (char*) malloc(sizeof(char)*51);
+	Passenger* firstPassenger;
+	Passenger* secondPassenger;
+
+	if(first!=NULL && second!=NULL && firstLastName!=NULL && secondLastName!=NULL)
+	{
+		firstPassenger = (Passenger*) first;
+		secondPassenger = (Passenger*) second;
+
+		if(Passenger_getName(firstPassenger, firstLastName) && Passenger_getName(secondPassenger, secondLastName))
+		{
+			lastNameCompared = strcmp(firstLastName, secondLastName);
+		}
+		if(lastNameCompared==0)
+		{
+			result = 0;
+		}
+		else if(lastNameCompared>0)
+		{
+			result = 1;
+		}
+		else if(lastNameCompared<0)
+		{
+			result = -1;
+		}
+	}
+
+	free(firstLastName);
+	free(secondLastName);
+
+	return result;
+}
+
+int controller_comparePrices(void* first, void* second)
+{
+	int priceCompared;
+	int result;
+	float* firstPrice = (float*) malloc(sizeof(float));
+	float* secondPrice = (float*) malloc(sizeof(float));
+	Passenger* firstPassenger;
+	Passenger* secondPassenger;
+
+	if(first!=NULL && second!=NULL && firstPrice!=NULL && secondPrice!=NULL)
+	{
+		firstPassenger = (Passenger*) first;
+		secondPassenger = (Passenger*) second;
+
+		if(Passenger_getPrice(firstPassenger, firstPrice) && Passenger_getPrice(secondPassenger, secondPrice))
+		{
+			priceCompared = *firstPrice - *secondPrice;
+		}
+		if(priceCompared==0)
+		{
+			result = 0;
+		}
+		else if(priceCompared>0)
+		{
+			result = 1;
+		}
+		else if(priceCompared<0)
+		{
+			result = -1;
+		}
+	}
+
+	free(firstPrice);
+	free(secondPrice);
+
+	return result;
 }
