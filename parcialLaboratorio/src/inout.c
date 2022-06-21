@@ -27,7 +27,14 @@ int menu()
 	while(!validarNumeroRangos(eleccion, 0, 6))
 	{
 		system("cls");
-		printf("Eleccion erronea. Elija una opcion: ");
+		printf("1. Alta\n");
+		printf("2. Modificar\n");
+		printf("3. Baja\n");
+		printf("4. Informar\n");
+		printf("5. Listar\n");
+		printf("6. Salir\n");
+		printf("Elija una opcion: ");
+		fflush(stdin);
 		scanf("%d", &eleccion);
 	}
 
@@ -41,13 +48,20 @@ int subMenuModificar()
 	printf("1. Titulo\n");
 	printf("2. Fecha de publicacion\n");
 	printf("3. Importe\n");
-	printf("4. Salir\n");
+	printf("4. Tipo de album\n");
+	printf("5. Salir\n");
 	printf("Que desea modificar? ");
 	scanf("%d", &eleccion);
 	while(!validarNumero(eleccion))
 	{
 		system("cls");
-		printf("Eleccion erronea. Elija una opcion: ");
+		printf("1. Titulo\n");
+		printf("2. Fecha de publicacion\n");
+		printf("3. Importe\n");
+		printf("4. Tipo de album\n");
+		printf("5. Salir\n");
+		printf("Que desea modificar? ");
+		fflush(stdin);
 		scanf("%d", &eleccion);
 	}
 
@@ -62,14 +76,17 @@ char subMenuListar()
 	printf("B. Todos los tipos de artistas musicales\n");
 	printf("C. Todos los artistas\n");
 	printf("D. Todos los albumes\n");
-	printf("E. Albumes ordenados\n");
-	printf("F. Todos los albumes cuya fecha de publicacion es anterior a 1/1/2000\n");
-	printf("G. Todos los albumes que superan el promedio de los importes\n");
-	printf("H. Todos los albumes de cada artista\n");
-	printf("I. Todos los albumes de un anio determinado\n");
-	printf("J. EL album o los albumes mas caros\n");
-	printf("K. Listar todo\n");
-	printf("L. Salir\n");
+	printf("E. Todos los tipos de albumes\n");
+	printf("F. Albumes ordenados\n");
+	printf("G. Todos los albumes cuya fecha de publicacion es anterior a 1/1/2000\n");
+	printf("H. Todos los albumes que superan el promedio de los importes\n");
+	printf("I. Todos los albumes de cada artista\n");
+	printf("J. Todos los albumes de un anio determinado\n");
+	printf("K. EL album o los albumes mas caros\n");
+	printf("L. Albumes que no son de vinilo\n");
+	printf("M. Albumes de vinilo de un artista determinado\n");
+	printf("N. Listar todo\n");
+	printf("O. Salir\n");
 	printf("Elija una opcion: ");
 	fflush(stdin);
 	scanf("%c", &eleccion);
@@ -77,7 +94,23 @@ char subMenuListar()
 	while(!validarCaracter(eleccion))
 	{
 		system("cls");
-		printf("Eleccion erronea. Elija una opcion: ");
+		printf("A. Todos los generos\n");
+		printf("B. Todos los tipos de artistas musicales\n");
+		printf("C. Todos los artistas\n");
+		printf("D. Todos los albumes\n");
+		printf("E. Todos los tipos de albumes\n");
+		printf("F. Albumes ordenados\n");
+		printf("G. Todos los albumes cuya fecha de publicacion es anterior a 1/1/2000\n");
+		printf("H. Todos los albumes que superan el promedio de los importes\n");
+		printf("I. Todos los albumes de cada artista\n");
+		printf("J. Todos los albumes de un anio determinado\n");
+		printf("K. EL album o los albumes mas caros\n");
+		printf("L. Albumes que no son de vinilo\n");
+		printf("M. Albumes de vinilo de un artista determinado\n");
+		printf("N. Listar todo\n");
+		printf("O. Salir\n");
+		printf("Elija una opcion: ");
+		fflush(stdin);
 		scanf("%c", &eleccion);
 	}
 
@@ -95,10 +128,15 @@ char subMenuInformar()
 	fflush(stdin);
 	scanf("%c", &eleccion);
 	eleccion = toupper(eleccion);
+
 	while(!validarCaracter(eleccion))
 	{
 		system("cls");
-		printf("Eleccion erronea. Elija una opcion: ");
+		printf("A. Total y promedio de los importes. Cuantos albumes superan el promedio.\n");
+		printf("B. Cantidad de albumes cuya fecha de publicacion es anterior a 1/1/2000\n");
+		printf("C. Salir\n");
+		printf("Elija una opcion: ");
+		fflush(stdin);
 		scanf("%c", &eleccion);
 	}
 
@@ -163,17 +201,37 @@ void mostrarArtistas(eArtista listaArtistas[], int tam, eTipoArtista listaTipoAr
 	}
 }
 
+void mostrarTipoAlbumes(eTipoAlbum listaTipoAlbum[], int tam, int* codigoTAlb)
+{
+	system("cls");
+	printf("-----------------------------------\n");
+	printf("           TIPO DE ALBUMES         \n");
+	printf("-----------------------------------\n");
+	printf("        ID         DESCRIPCION     \n");
+	printf("-----------------------------------\n");
+	if(listaTipoAlbum!=NULL&&tam>0)
+	{
+		for(int i=0;i<tam;i++)
+		{
+			printf("      %d        %s\n", listaTipoAlbum[i].id, listaTipoAlbum[i].descripcionTipoAlbum);
+			printf("-----------------------------------\n");
+		}
+	}
+}
+
 void mostrarAlbum(eAlbum album[], int tam, int indice, eGenero listaGeneros[], int tamGenero,
-		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG)
+		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb)
 {
 	char descripcionGenero[51];
 	char nombreArtista[51];
+	char descripcionTipoAlbum[51];
 	cargaNombreArtista(listaArtistas, tam, album[indice].codigoArtista, nombreArtista);
 	cargaDescripcionGenero(listaGeneros, tam, album[indice].codigoGenero, descripcionGenero);
+	cargaDescripcionTipoAlbum(listaTipoAlbum, tam, album[indice].codigoTipoAlbum, descripcionTipoAlbum);
 
 	if(album!=NULL&&tam>0)
 	{
-		printf("%d %s %.2f %d/%d/%d %s %s\n",
+		printf("%d %s %.2f %d/%d/%d %s %s %s\n",
 				album[indice].codigoAlbum,
 				album[indice].titulo,
 				album[indice].importe,
@@ -181,26 +239,28 @@ void mostrarAlbum(eAlbum album[], int tam, int indice, eGenero listaGeneros[], i
 				album[indice].fecha.mes,
 				album[indice].fecha.anio,
 				nombreArtista,
-				descripcionGenero);
+				descripcionGenero,
+				descripcionTipoAlbum);
 	}
 }
 
 void mostrarAlbumes(eAlbum albumes[], int tam, eGenero listaGeneros[], int tamGenero,
-		eArtista listaArtistas[], int tamArtista, int* codigoA, int* codigoG)
+		eArtista listaArtistas[], int tamArtista, int* codigoA, int* codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb)
 {
 	int sinAlbumes = 1;
 	if(albumes!=NULL&&tam>0)
 	{
-		printf("                         ALBUMES                         \n");
-		printf("---------------------------------------------------------\n");
-		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO\n");
-		printf("---------------------------------------------------------\n");
+		system("cls");
+		printf("                            ALBUMES                               \n");
+		printf("------------------------------------------------------------------\n");
+		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
+		printf("------------------------------------------------------------------\n");
 		for(int i=0;i<tam;i++)
 		{
 			if(albumes[i].estado==OCUPADO)
 			{
 				sinAlbumes = 0;
-				mostrarAlbum(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, &codigoA, &codigoG);
+				mostrarAlbum(albumes, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
 				printf("---------------------------------------------------------\n");
 			}
 		}

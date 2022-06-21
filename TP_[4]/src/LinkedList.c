@@ -427,7 +427,7 @@ int ll_contains(LinkedList* this, void* pElement)
     if(this!=NULL)
     {
 		returnAux=0;
-    	for(i=0;i<size;i++)
+    	for(i=0; i<size; i++)
     	{
     		auxElement = ll_get(this, i);
     		if(auxElement == pElement)
@@ -461,13 +461,14 @@ int ll_containsAll(LinkedList* this, LinkedList* this2)
 	{
 		returnAux=1;
 
+
 		size=ll_len(this2);
 
-		for (i=0; i<size; i++)
+		for(i=0; i<size; i++)
 		{
 			pElement=ll_get(this2, i);
 
-			if (!ll_contains(this, pElement))
+			if(ll_contains(this, pElement)==0)
 			{
 				returnAux=0;
 				break;
@@ -548,7 +549,7 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     int result;
     void* pAux = NULL;
 
-    if (this != NULL && pFunc != NULL && order >= 0 && order <= 1)
+    if (this!=NULL && pFunc!=NULL && order>=0 && order<=1)
     {
         returnAux = 0;
         if(ll_len(this) > 1)
@@ -556,9 +557,9 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
         	nodeOne = this->pFirstNode;
         	nodeTwo = nodeOne->pNextNode;
 
-            while (nodeOne->pNextNode != NULL)
+            while(nodeOne->pNextNode!=NULL)
             {
-                while (nodeTwo != NULL)
+                while(nodeTwo!=NULL)
                 {
                 	result = (*pFunc)(nodeOne->pElement, nodeTwo->pElement);
                     if((result > 0 && order) || (result < 0 && !order))

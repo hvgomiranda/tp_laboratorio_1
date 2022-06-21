@@ -50,19 +50,30 @@ void hardcodearArtista(eArtista listaArtistas[], int tam, int* codigoA)
 	}
 }
 
+void hardcodearTipoAlbum(eTipoAlbum listaTiposAlbumes[], int tam, int* codigoTAlb)
+{
+	char descripcionTipoAlbum[3][51] = {"Vinilo", "Cinta", "CD"};
+	for(int i=0; i<tam; i++)
+	{
+		(*codigoTAlb)++;
+		listaTiposAlbumes[i].id = *codigoTAlb;
+		strcpy(listaTiposAlbumes[i].descripcionTipoAlbum, descripcionTipoAlbum[i]);
+	}
+}
+
 void hardcodearAlbumes(eAlbum listaAlbumes[])
 {
 	eAlbum carga[] = {
-						{1,"Desatormentandonos", 500, 1, {1,9,1972}, 10001, 1002},
-						{2,"Pescado 2", 500, 1, {1,2,1973}, 10001, 1002},
-						{3,"Artaud", 750, 1, {1,10,1973}, 10001, 1002},
-						{4,"Halo", 1250.50, 1, {5,4,2017}, 10002, 1002},
-						{5,"Rapsodias Hungaras", 1400, 1, {14,1,2020}, 10003, 1001},
-						{6,"Swimming", 900, 1, {3,8,2018}, 10004, 1004},
-						{7,"Blonde", 850, 1, {20,8,2016}, 10006, 1004},
-						{8,"Chico Buarque", 500, 1, {19,6,1966}, 10009, 1005},
-						{9,"Glass: Piano Works", 1000, 1, {1,5,1968}, 10008, 1001},
-						{10,"Plastic Beach", 850, 1, {3,4,2010}, 10007, 1004}
+						{1,"Desatormentandonos", 500, 1, {1,9,1972}, 10001, 1002, 3},
+						{2,"Pescado 2", 500, 1, {1,2,1973}, 10001, 1002, 3},
+						{3,"Artaud", 750, 1, {1,10,1973}, 10001, 1002, 1},
+						{4,"Halo", 1250.50, 1, {5,4,2017}, 10002, 1002, 3},
+						{5,"Rapsodias Hungaras", 1400, 1, {14,1,2020}, 10003, 1001, 2},
+						{6,"Swimming", 900, 1, {3,8,2018}, 10004, 1004, 1},
+						{7,"Blonde", 850, 1, {20,8,2016}, 10006, 1004, 3},
+						{8,"Chico Buarque", 500, 1, {19,6,1966}, 10009, 1005, 1},
+						{9,"Glass: Piano Works", 1000, 1, {1,5,1968}, 10008, 1001, 2},
+						{10,"Plastic Beach", 850, 1, {3,4,2010}, 10007, 1004, 3}
 					};
 
 	if(listaAlbumes!=NULL)
@@ -127,10 +138,11 @@ int buscarAlbumPorCodigo(eAlbum album[], int tam, int codigo)
 			}
 		}
 	}
-	if(!retorno)
+
+	if(retorno==0)
 	{
 		system("cls");
-		printf("Codigo no encontrado");
+		printf("Codigo no encontrado\n");
 		system("pause");
 	}
 	return retorno;
@@ -138,13 +150,16 @@ int buscarAlbumPorCodigo(eAlbum album[], int tam, int codigo)
 
 int buscarIndiceAlbumPorCodigo(eAlbum album[], int tam, int codigo)
 {
-	int indice = 0;
-	for(int i=0; i<tam;i++)
+	int indice=0;
+	if(album!=NULL)
 	{
-		if(album[i].codigoAlbum == codigo && album[i].estado == OCUPADO)
+		for(int i=0; i<tam;i++)
 		{
-			indice = i;
-			break;
+			if(album[i].codigoAlbum == codigo && album[i].estado == OCUPADO)
+			{
+				indice = i;
+				break;
+			}
 		}
 	}
 	return indice;
@@ -153,10 +168,10 @@ int buscarIndiceAlbumPorCodigo(eAlbum album[], int tam, int codigo)
 
 //ABM----------------------------------------------------------------------------------------------------------------
 int altaEstructura(eAlbum albumes[], int tam, int* codigo, eGenero listaGeneros[], int tamGeneros, eArtista listaArtistas[],
-		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int* codigoG, int* codigoA, int* codigoTA)
+		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int* codigoG, int* codigoA, int* codigoTA,
+		eTipoAlbum listaTipoAlbum[], int tamTipoAlbumes, int* codigoTAlb)
 {
 	int indice;
-	int i;
 	eAlbum auxAlbum;
 	int retorno = 0;
 
@@ -194,22 +209,31 @@ int altaEstructura(eAlbum albumes[], int tam, int* codigo, eGenero listaGeneros[
 			do{
 				mostrarGeneros(listaGeneros, tamGeneros);
 				printf("\nElija el genero al que pertenece el album: ");
+				fflush(stdin);
 				scanf("%d", &auxAlbum.codigoGenero);
 			}while(!validarNumeroRangos(auxAlbum.codigoGenero, 1000, 1006));
 
 			do{
 				system("cls");
-				mostrarArtistas(listaArtistas, tamArtistas, listaTipoArtista, tamTipoArtista, &codigoTA);
+				mostrarArtistas(listaArtistas, tamArtistas, listaTipoArtista, tamTipoArtista, codigoTA);
 				printf("\nElija el artista del album: ");
+				fflush(stdin);
 				scanf("%d", &auxAlbum.codigoArtista);
 			}while(!validarNumeroRangos(auxAlbum.codigoArtista, 10000, 10010));
+
+			do{
+				system("cls");
+				mostrarTipoAlbumes(listaTipoAlbum, tamTipoAlbumes, codigoTAlb);
+				printf("\nElija el tipo de album: ");
+				fflush(stdin);
+				scanf("%d", &auxAlbum.codigoTipoAlbum);
+			}while(!validarNumeroRangos(auxAlbum.codigoTipoAlbum, 1, 3));
 
 			auxAlbum.fecha = cargarFecha();
 
 			auxAlbum.estado = OCUPADO;
 
 			retorno = 1;
-
 		}
 
 		albumes[indice] = auxAlbum;
@@ -219,7 +243,8 @@ int altaEstructura(eAlbum albumes[], int tam, int* codigo, eGenero listaGeneros[
 }
 
 int bajaEstructura(eAlbum albumes[], int tam, int*codigo, eGenero listaGeneros[], int tamGeneros, eArtista listaArtistas[],
-		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int *codigoG, int *codigoA)
+		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int *codigoG, int *codigoA,
+		eTipoAlbum listaTipoAlbum[], int tamTipoAlbumes, int* codigoTAlb)
 {
 	int retorno = 0;
 	char confirmacion;
@@ -232,8 +257,9 @@ int bajaEstructura(eAlbum albumes[], int tam, int*codigo, eGenero listaGeneros[]
 		retorno = 1;
 		system("cls");
 		do{
-			mostrarAlbumes(albumes, tam, listaGeneros, tamGeneros, listaArtistas, tamArtistas, &codigoG, &codigoA);
+			mostrarAlbumes(albumes, tam, listaGeneros, tamGeneros, listaArtistas, tamArtistas, codigoG, codigoA, listaTipoAlbum, codigoTAlb);
 			printf("\n\nElija el codigo del album a eliminar: ");
+			fflush(stdin);
 			scanf("%d", &codigoBaja);
 		}while(!buscarAlbumPorCodigo(albumes, tam, codigoBaja));
 
@@ -254,8 +280,9 @@ int bajaEstructura(eAlbum albumes[], int tam, int*codigo, eGenero listaGeneros[]
 		}
 		else
 		{
+			retorno = 0;
 			system("cls");
-			printf("Baja cancelada");
+			printf("Baja cancelada\n");
 			system("pause");
 		}
 	}
@@ -264,7 +291,8 @@ int bajaEstructura(eAlbum albumes[], int tam, int*codigo, eGenero listaGeneros[]
 }
 
 int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int tamGeneros, eArtista listaArtistas[],
-		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int *codigoG, int *codigoA)
+		int tamArtistas, eTipoArtista listaTipoArtista[], int tamTipoArtista, int *codigoG, int *codigoA,
+		eTipoAlbum listaTipoAlbum[], int tamTipoAlbumes, int* codigoTAlb)
 {
 	eAlbum auxAlbum;
 	int retorno = 0;
@@ -277,7 +305,7 @@ int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int t
 	{
 		system("cls");
 		do{
-			mostrarAlbumes(albumes, tam, listaGeneros, tamGeneros, listaArtistas, tamArtistas, &codigoG, &codigoA);
+			mostrarAlbumes(albumes, tam, listaGeneros, tamGeneros, listaArtistas, tamArtistas, codigoG, codigoA, listaTipoAlbum, codigoTAlb);
 			printf("\n\nElija el codigo del album a modificar: ");
 			scanf("%d", &codigoModificar);
 		}while(!buscarAlbumPorCodigo(albumes, tam, codigoModificar));
@@ -290,10 +318,14 @@ int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int t
 			switch(eleccion)
 			{
 			case 1:
-				system("cls");
-				printf("Cual es el nuevo titulo del album? ");
-				fflush(stdin);
-				scanf("%[^\n]", auxAlbum.titulo);
+
+				do
+				{
+					system("cls");
+					printf("Cual es el nuevo titulo del album? ");
+					fflush(stdin);
+					scanf("%[^\n]", auxAlbum.titulo);
+				}while(!validarCadena(auxAlbum.titulo, 51));
 				do{
 					system("cls");
 					printf("El nuevo titulo es %s. Es correcto? (s/n)", auxAlbum.titulo);
@@ -308,20 +340,17 @@ int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int t
 				else
 				{
 					system("cls");
-					printf("modificacion cancelada");
+					printf("modificacion cancelada\n");
 					system("pause");
 				}
 				break;
 
 			case 2:
+
 				system("cls");
 				printf("Cual es la nueva fecha de publicacion del album?\n");
-				printf("Ingrese el dia: ");
-				scanf("%d", &auxAlbum.fecha.dia);
-				printf("\nIngrese el mes: ");
-				scanf("%d", &auxAlbum.fecha.mes);
-				printf("\nIngrese el anio: ");
-				scanf("%d", &auxAlbum.fecha.anio);
+				auxAlbum.fecha = cargarFecha();
+
 				do{
 					system("cls");
 					printf("La nueva fecha es %d/%d/%d. Es correcto? (s/n)", auxAlbum.fecha.dia,
@@ -337,16 +366,19 @@ int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int t
 				else
 				{
 					system("cls");
-					printf("modificacion cancelada");
+					printf("modificacion cancelada\n");
 					system("pause");
 				}
 				break;
 
 			case 3:
-				system("cls");
-				printf("Cual es el nuevo importe del album?\n");
-				printf("Ingrese el importe: ");
-				scanf("%f", &auxAlbum.importe);
+				do
+				{
+					system("cls");
+					printf("Cual es el nuevo importe del album?\n");
+					printf("Ingrese el importe: ");
+					scanf("%f", &auxAlbum.importe);
+				}while(!validarNumeroRangos(auxAlbum.importe, 0, 999999));
 				do{
 					system("cls");
 					printf("El nuevo importe es %.2f. Es correcto? (s/n)", auxAlbum.importe);
@@ -361,12 +393,43 @@ int modificarEstructura(eAlbum albumes[], int tam, eGenero listaGeneros[], int t
 				else
 				{
 					system("cls");
-					printf("modificacion cancelada");
+					printf("modificacion cancelada\n");
 					system("pause");
 				}
 				break;
 
 			case 4:
+				do
+				{
+					system("cls");
+					mostrarTipoAlbumes(listaTipoAlbum, tamTipoAlbumes, codigoTAlb);
+					printf("Cual es el nuevo tipo de album?\n");
+					printf("Ingrese el id del tipo: ");
+					fflush(stdin);
+					scanf("%d", &auxAlbum.codigoTipoAlbum);
+				}while(!validarNumeroRangos(auxAlbum.codigoTipoAlbum, 0, 3));
+
+
+				do{
+					system("cls");
+					printf("El nuevo tipo de album es %s. Es correcto? (s/n)", listaTipoAlbum[(auxAlbum.codigoTipoAlbum)-1].descripcionTipoAlbum);
+					fflush(stdin);
+					scanf("%c", &confirmacion);
+				}while(!validarCaracterOpciones(confirmacion, 's', 'n'));
+				if(confirmacion == 's')
+				{
+					albumes[indice].codigoTipoAlbum = auxAlbum.codigoTipoAlbum;
+					retorno=1;
+				}
+				else
+				{
+					system("cls");
+					printf("modificacion cancelada\n");
+					system("pause");
+				}
+				break;
+
+			case 5:
 				system("cls");
 				printf("Ha salido del sub menu de modificacion.\n");
 				system("pause");
@@ -398,6 +461,27 @@ int cargaDescripcionTipoArtista(eTipoArtista listaTipoArtista[], int tam, int co
 			if(listaTipoArtista[i].codigoTipoArtista==codigoTipoArtista)
 			{
 				strcpy(descripcionTipoArtista, listaTipoArtista[i].descripcionTipoArtista);
+				retorno=1;
+				break;
+			}
+		}
+	}
+
+	return retorno;
+}
+
+int cargaDescripcionTipoAlbum(eTipoAlbum listaTipoAlbum[], int tam, int codigoTipoAlbum, char descripcionTipoAlbum[])
+{
+	int i;
+	int retorno=0;
+
+	if(listaTipoAlbum!=NULL && tam>0 && descripcionTipoAlbum!=NULL)
+	{
+		for(i=0; i<tam; i++)
+		{
+			if(listaTipoAlbum[i].id==codigoTipoAlbum)
+			{
+				strcpy(descripcionTipoAlbum, listaTipoAlbum[i].descripcionTipoAlbum);
 				retorno=1;
 				break;
 			}
@@ -460,16 +544,19 @@ eFecha cargarFecha()
 	do{
 	system("cls");
 	printf("Ingrese el dia: ");
+	fflush(stdin);
 	scanf("%d", &dia);
 	}while(!validarNumeroRangos(dia, 0, 31));
 
 	do{
 	printf("Ingrese el mes: ");
+	fflush(stdin);
 	scanf("%d", &mes);
 	}while(!validarNumeroRangos(mes, 0, 12));
 
 	do{
 	printf("Ingrese el anio: ");
+	fflush(stdin);
 	scanf("%d", &anio);
 	}while(!validarNumeroRangos(anio, 1919, 2022));
 

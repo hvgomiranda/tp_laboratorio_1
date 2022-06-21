@@ -21,17 +21,20 @@ int main(void)
 	int codigoTA = 100;
 	int codigoG = 1000;
 	int codigoA = 10000;
+	int codigoTAlb = 0;
 	eGenero listaGeneros[6];
 	eArtista listaArtistas[10];
 	eTipoArtista listaTipoArtista[2];
 	eAlbum listaAlbumes[TAM];
+	eTipoAlbum listaTiposAlbumes[3];
 
 	setbuf(stdout, NULL);
 
 	hardcodearTipoArtista(listaTipoArtista, TAMTIPOARTISTAS, &codigoTA);
 	hardcodearGenero(listaGeneros, TAMGENERO, &codigoG);
 	hardcodearArtista(listaArtistas, TAMARTISTAS, &codigoA);
-	inicializarEstructura(listaAlbumes, TAM); //hacer algo con el retorno
+	hardcodearTipoAlbum(listaTiposAlbumes, TAMTIPOALBUMES, &codigoTAlb);
+	inicializarEstructura(listaAlbumes, TAM);
 	hardcodearAlbumes(listaAlbumes);
 
 	do
@@ -40,7 +43,7 @@ int main(void)
 		{
 		case 1:
 			if(altaEstructura(listaAlbumes, TAM, &proximoCodigo, listaGeneros, TAMGENERO, listaArtistas,
-					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA, &codigoTA))
+					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA, &codigoTA, listaTiposAlbumes, TAMTIPOALBUMES, &codigoTAlb))
 			{
 				system("cls");
 				printf("Alta exitosa\n");
@@ -55,7 +58,7 @@ int main(void)
 			break;
 		case 2:
 			if(modificarEstructura(listaAlbumes, TAM, listaGeneros, TAMGENERO, listaArtistas,
-					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA))
+					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA, listaTiposAlbumes, TAMTIPOALBUMES, &codigoTAlb))
 			{
 				system("cls");
 				printf("Modificacion exitosa\n");
@@ -70,8 +73,7 @@ int main(void)
 			break;
 		case 3:
 			if(bajaEstructura(listaAlbumes, TAM, &proximoCodigo, listaGeneros, TAMGENERO, listaArtistas,
-					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA))
-
+					TAMARTISTAS, listaTipoArtista, TAMTIPOARTISTAS, &codigoG, &codigoA, listaTiposAlbumes, TAMTIPOALBUMES, &codigoTAlb))
 			{
 				system("cls");
 				printf("Baja exitosa\n");
@@ -128,40 +130,64 @@ int main(void)
 					break;
 				case 'D':
 					mostrarAlbumes(listaAlbumes, TAM, listaGeneros, TAMGENERO,
-							listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
 					system("pause");
 					break;
 				case 'E':
-
-					break;
-				case 'F':
-					mostrarAlbumesViejitos(listaAlbumes, TAM, listaGeneros, TAMGENERO,
-							listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
+					mostrarTipoAlbumes(listaTiposAlbumes, TAMTIPOALBUMES, &codigoTAlb);
 					system("pause");
 					break;
+
+				case 'F':
+					mostrarAlbumesOrdenados(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
 				case 'G':
-					mostrarAlbumesCaros(listaAlbumes, TAM, listaGeneros, TAMGENERO,
-								listaArtistas, TAMARTISTAS, &codigoA, &codigoG);
+					mostrarAlbumesViejitos(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
 					system("pause");
 					break;
 				case 'H':
-
-					break;
-				case 'I':
-
-					break;
-				case 'J':
-					albumMasCaro(listaAlbumes, TAM);
+					mostrarAlbumesCaros(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
 					system("pause");
 					break;
+				case 'I':
+					mostrarAlbumesPorArtistas(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
+				case 'J':
+					mostrarAlbumesPorAnio(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
 				case 'K':
-
+					albumMasCaro(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					system("pause");
 					break;
 				case 'L':
+					mostrarAlbumesNoVinilo(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
+
+				case 'M':
+					mostrarAlbumesViniloPorArtista(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb,
+							listaTipoArtista, TAMTIPOARTISTAS, &codigoTA);
+					break;
+
+				case 'N':
+					mostrarAlbumes(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					system("pause");
+					break;
+
+				case 'O':
 					system("cls");
 					printf("Saliste del menu de listas.\n");
 					system("pause");
 					break;
+
 				default:
 					system("cls");
 					printf("Error, elija nuevamente.\n");
