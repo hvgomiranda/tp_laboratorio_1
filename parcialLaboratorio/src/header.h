@@ -63,7 +63,6 @@ typedef struct
 	int id;
 	char descripcionTipoAlbum[51];
 }eTipoAlbum;
-
 //ESTRUCTURAS---------------------------------------------------------------------------------------------------------
 
 //PROTOTIPOS---------------------------------------------------------------------------------------------------------
@@ -129,6 +128,10 @@ void mostrarAlbumesViniloPorArtista(eAlbum album[], int tam, eGenero listaGenero
 		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb,
 		eTipoArtista listaTipoArtista[], int tamTipoArtista, int *codigoTA);
 void mostrarAlbumesOrdenados(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero,
+		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb);
+void mostrarAlbumPorTipoGenero(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero,
+		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb);
+void informarCantidadSolistas(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero,
 		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb);
 //INFORMES-----------------------------------------------------------------------------------------------------------
 

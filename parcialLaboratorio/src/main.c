@@ -17,6 +17,8 @@
 int main(void)
 {
 	char decision;
+	char subDecision;
+	char subDecisionListar;
 	int proximoCodigo=10;
 	int codigoTA = 100;
 	int codigoG = 1000;
@@ -39,6 +41,7 @@ int main(void)
 
 	do
 	{
+
 		switch(menu())
 		{
 		case 1:
@@ -90,7 +93,8 @@ int main(void)
 		case 4:
 			do
 			{
-				switch(subMenuInformar())
+				subDecision = subMenuInformar();
+				switch(subDecision)
 				{
 				case 'A':
 					importePromedio(listaAlbumes, TAM);
@@ -109,12 +113,14 @@ int main(void)
 					system("pause");
 					break;
 				}
-			}while(subMenuInformar()!='C');
+			}while(subDecision!='C');
 			break;
+
 		case 5:
 			do
 			{
-				switch(subMenuListar())
+				subDecisionListar = subMenuListar();
+				switch(subDecisionListar)
 				{
 				case 'A':
 					mostrarGeneros(listaGeneros, TAMGENERO);
@@ -181,8 +187,17 @@ int main(void)
 							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
 					system("pause");
 					break;
-
 				case 'O':
+					mostrarAlbumPorTipoGenero(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
+
+				case 'P':
+					informarCantidadSolistas(listaAlbumes, TAM, listaGeneros, TAMGENERO,
+							listaArtistas, TAMARTISTAS, &codigoA, &codigoG, listaTiposAlbumes, &codigoTAlb);
+					break;
+
+				case 'Q':
 					system("cls");
 					printf("Saliste del menu de listas.\n");
 					system("pause");
@@ -194,7 +209,7 @@ int main(void)
 					system("pause");
 					break;
 				}
-			}while(subMenuListar()!='L');
+			}while(subDecisionListar!='Q');
 			break;
 		case 6:
 			do{
@@ -209,6 +224,12 @@ int main(void)
 				printf("Salida cancelada.\n");
 				system("pause");
 			}
+			else
+			{
+				system("cls");
+				printf("APROBAME DAVID\n");
+				system("pause");
+			}
 			break;
 		default:
 			system("cls");
@@ -220,5 +241,3 @@ int main(void)
 
 	return EXIT_SUCCESS;
 }
-
-

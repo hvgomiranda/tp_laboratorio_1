@@ -74,10 +74,11 @@ void mostrarAlbumesViejitos(eAlbum albumes[], int tam, eGenero listaGeneros[], i
 	int sinAlbumes = 1;
 	if(albumes!=NULL&&tam>0)
 	{
-		printf("                            ALBUMES                               \n");
-		printf("------------------------------------------------------------------\n");
-		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
-		printf("------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("|                            ALBUM/ES LANZADOS DESPUES DEL 2000                                 |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
 		for(int i=0;i<tam;i++)
 		{
 			if(albumes[i].estado==OCUPADO)
@@ -107,7 +108,7 @@ void mostrarAlbumViejito(eAlbum album[], int tam, int indice, eGenero listaGener
 
 	if(album!=NULL&&tam>0&&(album[indice].fecha.anio<2000))
 	{
-		printf("%d %s %.2f %d/%d/%d %s %s %s\n",
+		printf("| %3d      %-20s %7.2f   %.2d/%.2d/%.4d     %-20s %-10s %-6s |\n",
 				album[indice].codigoAlbum,
 				album[indice].titulo,
 				album[indice].importe,
@@ -126,10 +127,11 @@ void mostrarAlbumesCaros(eAlbum albumes[], int tam, eGenero listaGeneros[], int 
 	int sinAlbumes = 1;
 	if(albumes!=NULL&&tam>0)
 	{
-		printf("                            ALBUMES                               \n");
-		printf("------------------------------------------------------------------\n");
-		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
-		printf("------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("|                             ALBUM/ES MAS CAROS QUE LA MEDIA                                   |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
 		for(int i=0;i<tam;i++)
 		{
 			if(albumes[i].estado==OCUPADO)
@@ -175,7 +177,7 @@ void mostrarAlbumCaro(eAlbum album[], int tam, int indice, eGenero listaGeneros[
 
 	if(album!=NULL&&tam>0&&(album[indice].importe>promedio))
 	{
-		printf("%d %s %.2f %d/%d/%d %s %s %s\n",
+		printf("| %3d      %-20s %7.2f   %.2d/%.2d/%.4d     %-20s %-10s %-6s |\n",
 				album[indice].codigoAlbum,
 				album[indice].titulo,
 				album[indice].importe,
@@ -275,9 +277,11 @@ void albumMasCaro(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero
 		{
 			if(album[i].estado && album[i].importe == albumMasCaro)
 			{
-				printf("El album o los albumes mas caros\n");
-				printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
-				printf("------------------------------------------------------------------\n");
+				printf("-------------------------------------------------------------------------------------------------\n");
+				printf("|                                     ALBUM/ES MAS CAROS                                        |\n");
+				printf("-------------------------------------------------------------------------------------------------\n");
+				printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+				printf("-------------------------------------------------------------------------------------------------\n");
 				mostrarAlbum(album, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
 
 			}
@@ -292,15 +296,18 @@ void mostrarAlbumesNoVinilo(eAlbum album[], int tam, eGenero listaGeneros[], int
 	if(album!=NULL && tam>0)
 	{
 		system("cls");
-		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
-		printf("------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("|                              ALBUMES QUE NO SON DE VINILO                                     |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
 		for(int i=0;i<tam;i++)
 		{
 			if(album[i].estado && album[i].codigoTipoAlbum!=1)
 			{
 				acierto=1;
 				mostrarAlbum(album, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
-				printf("------------------------------------------------------------------\n");
+				printf("-------------------------------------------------------------------------------------------------\n");
 			}
 		}
 		if(!acierto)
@@ -319,30 +326,33 @@ void mostrarAlbumesViniloPorArtista(eAlbum album[], int tam, eGenero listaGenero
 	int codigoArtista;
 	int acierto=0;
 
-	mostrarArtistas(listaArtistas, tamArtista, listaTipoArtista, tamTipoArtista, codigoTA);
-
-	printf("Ingrese el codigo del artista que buscara: ");
-	fflush(stdin);
-	scanf("%d", &codigoArtista);
-
 	if(album!=NULL && tam>0)
 	{
+		mostrarArtistas(listaArtistas, tamArtista, listaTipoArtista, tamTipoArtista, codigoTA);
+
+		printf("Ingrese el codigo del artista que buscara: ");
+		fflush(stdin);
+		scanf("%d", &codigoArtista);
+
 		system("cls");
-		printf("CODIGO    TITULO     IMPORTE   FECHA    ARTISTA    GENERO     TIPO\n");
-		printf("------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("|                             ALBUMES DE VINILO POR ARTISTA                                     |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
 		for(int i=0;i<tam;i++)
 		{
 			if(album[i].estado && album[i].codigoTipoAlbum==1 && album[i].codigoArtista == codigoArtista)
 			{
 				acierto=1;
 				mostrarAlbum(album, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
-				printf("------------------------------------------------------------------\n");
+				printf("-------------------------------------------------------------------------------------------------\n");
 			}
 		}
 		if(!acierto)
 		{
 			system("cls");
-			printf("No hay discos del autor buscado\n");
+			printf("No hay vinilos del autor buscado\n");
 		}
 		system("pause");
 	}
@@ -368,6 +378,92 @@ void mostrarAlbumesOrdenados(eAlbum album[], int tam, eGenero listaGeneros[], in
 			}
 		}
 		mostrarAlbumes(album, tam, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
+		system("pause");
+	}
+}
+
+void mostrarAlbumPorTipoGenero(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero,
+		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb)
+{
+	int tipoAlbum;
+	int genero;
+	int acierto=0;
+
+	if(album!=NULL&&tam>0)
+	{
+		system("cls");
+		mostrarTipoAlbumes(listaTipoAlbum, 3, codigoTAlb);
+		printf("\nIngrese el id del tipo de artista: ");
+		fflush(stdin);
+		scanf("%d", &tipoAlbum);
+
+		system("cls");
+		mostrarGeneros(listaGeneros, tamGenero);
+		printf("\nIngrese el id del genero: ");
+		fflush(stdin);
+		scanf("%d", &genero);
+
+		system("cls");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("|                           ALBUMES POR GENERO Y TIPO DE ALBUM                                  |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("| CODIGO          TITULO         IMPORTE    FECHA          ARTISTA            GENERO    TIPO    |\n");
+		printf("-------------------------------------------------------------------------------------------------\n");
+		for(int i=0;i<tam;i++)
+		{
+			if(album[i].estado && album[i].codigoTipoAlbum==tipoAlbum && album[i].codigoGenero==genero)
+			{
+				acierto=1;
+				mostrarAlbum(album, tam, i, listaGeneros, tamGenero, listaArtistas, tamArtista, codigoA, codigoG, listaTipoAlbum, codigoTAlb);
+				printf("-------------------------------------------------------------------------------------------------\n");
+			}
+		}
+		if(!acierto)
+		{
+			system("cls");
+			printf("No hay albumes que concuerden con la busqueda\n");
+		}
+		system("pause");
+	}
+}
+
+void informarCantidadSolistas(eAlbum album[], int tam, eGenero listaGeneros[], int tamGenero,
+		eArtista listaArtistas[], int tamArtista, int *codigoA, int *codigoG, eTipoAlbum listaTipoAlbum[], int *codigoTAlb)
+{
+	int anio;
+	int contador=0;
+
+	if(album!=NULL&&tam>0)
+	{
+		do{
+		printf("Ingrese el anio a buscar: ");
+		fflush(stdin);
+		scanf("%d", &anio);
+		}while(!validarNumeroRangos(anio, 1919, 2022));
+		for(int i=0;i<tam;i++)
+		{
+			if(album[i].estado && album[i].fecha.anio==anio)
+			{
+				for(int j=0; j<tamArtista;j++)
+				{
+					if(album[i].codigoArtista == listaArtistas[j].codigoArtista && listaArtistas[j].codigoTipoArtista == 101)
+					{
+						contador++;
+					}
+				}
+			}
+		}
+	}
+	if(contador!=0)
+	{
+		system("cls");
+		printf("La cantidad es de %d\n", contador);
+		system("pause");
+	}
+	else
+	{
+		system("cls");
+		printf("no hay concordancias\n");
 		system("pause");
 	}
 }

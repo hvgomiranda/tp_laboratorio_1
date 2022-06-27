@@ -197,7 +197,7 @@ int altaEstructura(eAlbum albumes[], int tam, int* codigo, eGenero listaGeneros[
 			do{
 				printf("\nIngrese el titulo del album: ");
 				fflush(stdin);
-				scanf("%[^\n]", &auxAlbum.titulo);
+				gets(auxAlbum.titulo);
 			}while(!validarCadena(auxAlbum.titulo, 51));
 
 			do{
@@ -227,7 +227,7 @@ int altaEstructura(eAlbum albumes[], int tam, int* codigo, eGenero listaGeneros[
 				printf("\nElija el tipo de album: ");
 				fflush(stdin);
 				scanf("%d", &auxAlbum.codigoTipoAlbum);
-			}while(!validarNumeroRangos(auxAlbum.codigoTipoAlbum, 1, 3));
+			}while(!validarNumeroRangos(auxAlbum.codigoTipoAlbum, 0, 3));
 
 			auxAlbum.fecha = cargarFecha();
 

@@ -219,7 +219,7 @@ int ll_set(LinkedList* this, int index, void* pElement)
                         ( 0) Si funciono correctamente
  *
  */
-int ll_remove(LinkedList* this,int index)
+int ll_remove(LinkedList* this, int index)
 {
     int returnAux = -1;
     Node* node=NULL;
@@ -228,31 +228,22 @@ int ll_remove(LinkedList* this,int index)
 
     if(this!=NULL && index>=0 && index<ll_len(this))
     {
-    	if(index==0)
+    	node = getNode(this, index);
+
+    	if(index==0 && node!=NULL)
     	{
-    		this->pFirstNode = NULL;
+    		this->pFirstNode = this->pFirstNode->pNextNode;
     		free(node);
     		this->size--;
     		returnAux=0;
     	}
-    	else if(index!=ll_len(this))
+    	else if(index!=0 && node!=NULL)
     	{
     		previousNode = getNode(this, index-1);
-    		nextNode = getNode(this, index+1);
-    		if(previousNode!=NULL && nextNode!=NULL)
-    		{
-    			previousNode->pNextNode = nextNode;
-    			free(node);
-        		this->size--;
-        		returnAux=0;
-    		}
-    	}
-    	else if(index==ll_len(this))
-    	{
-    		previousNode = getNode(this, index-1);
+
     		if(previousNode!=NULL)
     		{
-    			previousNode->pNextNode = NULL;
+    			previousNode->pNextNode = previousNode->pNextNode->pNextNode;
     			free(node);
         		this->size--;
         		returnAux=0;
