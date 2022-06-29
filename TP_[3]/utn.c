@@ -23,7 +23,6 @@ int utn_getInteger(int* integer, char* message, int min, int max)
 			printf("Error.\n %s (minimo %d y maximo %d)", message, min, max);
 			scanf("%d", auxInteger);
 		}
-		printf("HOLA %d\n", *auxInteger);
 		*integer = *auxInteger;
 	}
 

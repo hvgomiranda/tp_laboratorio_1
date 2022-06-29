@@ -68,10 +68,6 @@ Passenger* Passenger_newParametros(char* idStr, char* nameStr, char* lastNameStr
 		Passenger_delete(aPassenger);
 		printf("Hubo un error al cargar el estado de vuelo\n");
 	}
-	else
-	{
-
-	}
 
 	return aPassenger;
 }

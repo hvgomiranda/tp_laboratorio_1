@@ -55,3 +55,10 @@ int controller_findPassengerById(LinkedList* pArrayListPassenger, int id);
 
 int controller_getNextId(LinkedList* pArrayListPassenger);
 
+int controller_compareIds(void* first, void* second);
+
+int controller_compareNames(void* first, void* second);
+
+int controller_compareLastNames(void* first, void* second);
+
+int controller_comparePrices(void* first, void* second);

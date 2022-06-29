@@ -11,18 +11,18 @@
 int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
 {
 	int isOk = 0;
+	FILE* pFile;
 
-	if(path != NULL && pArrayListPassenger != NULL)
+	if(path!=NULL && pArrayListPassenger!=NULL)
 	{
-		isOk = 1;
+		pFile = fopen(path, "r");
 
-		FILE* pFile = fopen(path, "r");
-
-		parser_PassengerFromText(pFile, pArrayListPassenger);
-
+		if(pFile!=NULL && parser_PassengerFromText(pFile, pArrayListPassenger))
+		{
+			isOk=1;
+		}
 		fclose(pFile);
 	}
-
 
     return isOk;
 }
@@ -36,7 +36,22 @@ int controller_loadFromText(char* path , LinkedList* pArrayListPassenger)
  */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+	int isOk = 0;
+	FILE* pFile;
+
+	if(path!=NULL && pArrayListPassenger!=NULL)
+	{
+		pFile = fopen(path, "rb");
+
+		if(pFile!=NULL && parser_PassengerFromBinary(pFile, pArrayListPassenger))
+		{
+			isOk = 1;
+		}
+
+		fclose(pFile);
+	}
+
+    return isOk;
 }
 
 int controller_addPassenger(LinkedList* pArrayListPassenger, int nextId)
@@ -144,7 +159,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger)
 
 		while(*index==0)
 		{
-			utn_getInteger(id, "Ingrese el id: ", 1, 999999);
+			utn_getInteger(id, "Error. Ingrese el id: ", 1, 999999);
 			*index = controller_findPassengerById(pArrayListPassenger, *id);
 		}
 
@@ -384,35 +399,93 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
 			switch(*option)
 			{
 			case 1:
-
+				ll_sort(pArrayListPassenger, controller_compareIds, 1);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 2:
+				ll_sort(pArrayListPassenger, controller_compareIds, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 3:
+				ll_sort(pArrayListPassenger, controller_compareNames, 1);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 4:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 5:
+				ll_sort(pArrayListPassenger, controller_compareLastNames, 1);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 6:
+				ll_sort(pArrayListPassenger, controller_compareLastNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 7:
+				ll_sort(pArrayListPassenger, controller_comparePrices, 1);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 8:
+				ll_sort(pArrayListPassenger, controller_comparePrices, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 9:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 10:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 11:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 12:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 13:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 14:
+				ll_sort(pArrayListPassenger, controller_compareNames, 0);
+				system("cls");
+				controller_listPassenger(pArrayListPassenger);
+				system("pause");
 				break;
 			case 15:
+				system("cls");
+				printf("Saliste del menu de ordenamiento\n");
+				system("pause");
 				break;
 			default:
 				break;
@@ -435,7 +508,20 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+    int isOk=0;
+    FILE* pFile;
+
+
+    if(path!=NULL && pArrayListPassenger!=NULL)
+    {
+    	pFile = fopen(path, "w");
+    	if(pFile!=NULL && parser_PassengerToText(pFile, pArrayListPassenger))
+    	{
+    		isOk=1;
+    	}
+    	fclose(pFile);
+    }
+    return isOk;
 }
 
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).
@@ -447,34 +533,44 @@ int controller_saveAsText(char* path , LinkedList* pArrayListPassenger)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger)
 {
-    return 1;
+    int isOk=0;
+    FILE* pFile;
+
+
+    if(path!=NULL && pArrayListPassenger!=NULL)
+    {
+    	pFile = fopen(path, "wb");
+    	if(pFile!=NULL && parser_PassengerToBinary(pFile, pArrayListPassenger))
+    	{
+    		isOk=1;
+    	}
+    	fclose(pFile);
+    }
+    return isOk;
 }
 
 int controller_findPassengerById(LinkedList* pArrayListPassenger, int id)
 {
-	int index = 0;
+	int index = -1;
 	int* size = (int*) malloc(sizeof(int));
 	int* idAux = (int*) malloc(sizeof(int));
-	int* error = (int*) malloc(sizeof(int));
 
-	*error = 1;
 	Passenger* aPassenger;
 
-	if(pArrayListPassenger!=NULL && size!=NULL && idAux!=NULL && error!=NULL && id>0)
+	if(pArrayListPassenger!=NULL && size!=NULL && idAux!=NULL && id>0)
 	{
 		*size = ll_len(pArrayListPassenger);
 
-		for(int i = 0; i < *size; i++)
+		for(int i=0; i<*size; i++)
 		{
 			aPassenger = (Passenger*) ll_get(pArrayListPassenger, i);
 
 			if(aPassenger != NULL)
 			{
-				*error = Passenger_getId(aPassenger, idAux);
-
-				if(!(*error) && *idAux == id)
+				if(Passenger_getId(aPassenger, idAux) && *idAux==id)
 				{
 					index = i;
+					printf("INDEX %d", index);
 					break;
 				}
 			}
@@ -482,7 +578,6 @@ int controller_findPassengerById(LinkedList* pArrayListPassenger, int id)
 	}
 	free(size);
 	free(idAux);
-	free(error);
 
     return index;
 }

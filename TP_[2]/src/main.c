@@ -37,7 +37,7 @@ int main()
 			if(!newPassenger(&aPassenger))
 			{
 				aPassenger.id = id;
-				if(!addPassenger(list, LEN, aPassenger.id, aPassenger.name, aPassenger.lastName, aPassenger.price, aPassenger.typePassenger, aPassenger.flycode))
+				if(!addPassenger(list, LEN, aPassenger.id, aPassenger.name, aPassenger.lastName, aPassenger.price, aPassenger.typePassenger, aPassenger.flycode, aPassenger.flightStatus))
 				{
 					id++;
 					passengersSize++;
@@ -141,7 +141,11 @@ int main()
 					break;
 
 					case 3:
-					printf("informar 3\n");
+					order = newOrder();
+					sortPassengersByCode(list, LEN, order);
+					showPassengers(list, LEN);
+					printf("\n\n");
+					system("pause");
 					break;
 
 					case 4:
@@ -166,13 +170,31 @@ int main()
 				system("pause");
         	}
 			break;
-
         case 5:
+    		addPassenger(list, LEN, id, "Hugo", "Miranda", 89000.75, 1, "AA002", 1 );
+    		id++;
+    		passengersSize++;
+    		addPassenger(list, LEN, id, "Tomas", "Han", 120000, 2, "BB400", 1);
+    		id++;
+    		passengersSize++;
+    		addPassenger(list, LEN, id, "Dante", "Zampieri", 159000, 2, "AA598", 3);
+    		id++;
+    		passengersSize++;
+    		addPassenger(list, LEN, id, "Marcos", "Urdapilleta", 147350.25, 2, "BB878", 3);
+    		id++;
+    		passengersSize++;
+    		addPassenger(list, LEN, id, "Pedro", "Paramo", 150000, 2, "CC645", 2);
+    		id++;
+    		passengersSize++;
+        	break;
+        case 6:
 			continuar = 0;
 			break;
 
         default:
+        	system("cls");
 			printf("Error, elija nuevamente\n");
+			system("pause");
 			break;
         }
     }while(continuar);

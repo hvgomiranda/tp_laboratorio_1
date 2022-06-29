@@ -18,6 +18,7 @@ typedef struct
     float price;
     char flycode[10];
     int typePassenger;
+    int flightStatus;
     int isEmpty;
 }Passenger;
 //ESTRUCTURAS--------------------------------------------------------
@@ -70,7 +71,7 @@ int newPassenger(Passenger* newPassenger);
 /// @param typePassenger int
 /// @param flycode char[]
 /// @return retorna -1 si hay un error, 0 si está OK
-int addPassenger(Passenger* list, int len, int id, char name[], char lastName[], float price, int typePassenger, char flycode[]);
+int addPassenger(Passenger* list, int len, int id, char name[], char lastName[], float price, int typePassenger, char flycode[], int flightStatus);
 
 /// @brief modifica un pasajero elegido por el usuario
 ///
@@ -128,7 +129,7 @@ int showPassengers(Passenger* list, int len);
 /// @param minSize int
 /// @param maxSize int
 /// @return retorna 1 si TRUE y 0 si FALSE
-int validateString(char string[], int minSize, int maxSize);
+int validateString(char string[]);
 
 /// @brief valida si lo ingresado es un float entre un número y otro número
 ///
@@ -136,7 +137,7 @@ int validateString(char string[], int minSize, int maxSize);
 /// @param minSize int
 /// @param maxSize int
 /// @return retorna 1 si TRUE y 0 si FALSE
-int validateFloat(float number, int minSize, int maxSize);
+int validateFloat(char number[], int minSize, int maxSize);
 
 /// @brief valida si lo ingresado es un int entre un número y otro número
 ///
@@ -144,7 +145,7 @@ int validateFloat(float number, int minSize, int maxSize);
 /// @param minSize int
 /// @param maxSize int
 /// @return retorna 1 si TRUE y 0 si FALSE
-int validateInt(int number, int minSize, int maxSize);
+int validateInt(char number[], int minSize, int maxSize);
 
 /// @brief valida si lo ingresado es un char entre dos opciones
 ///
@@ -152,6 +153,7 @@ int validateInt(int number, int minSize, int maxSize);
 /// @param optionA char
 /// @param optionB char
 /// @return retorna 1 si TRUE y 0 si FALSE
-int validateChar(char character, char optionA, char optionB);
-
+int validateCharOptions(char character, char optionA, char optionB);
+int validateAlphanum(char string[]);
+int sortPassengersByCode(Passenger list[], int len, int order);
 #endif /* HEADER_H_ */
