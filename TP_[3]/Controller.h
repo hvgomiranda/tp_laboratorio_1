@@ -1,3 +1,9 @@
+#ifndef CONTROLLER_H_
+#define CONTROLLER_H_
+
+#include "parser.h"
+#include "utn.h"
+
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -7,6 +13,13 @@
  */
 int controller_loadFromText(char* path , LinkedList* pArrayListPassenger);
 
+/** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo binario).
+ *
+ * \param path char*
+ * \param pArrayListPassenger LinkedList*
+ * \return int
+ *
+ */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger);
 
 /** \brief Alta de pasajero
@@ -16,7 +29,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListPassenger);
  * \return int
  *
  */
-int controller_addPassenger(LinkedList* pArrayListPassenger, int nextId);
+int controller_addPassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Modificar datos de pasajero
  *
@@ -27,6 +40,13 @@ int controller_addPassenger(LinkedList* pArrayListPassenger, int nextId);
  */
 int controller_editPassenger(LinkedList* pArrayListPassenger);
 
+/** \brief Baja de pasajero
+ *
+ * \param path char*
+ * \param pArrayListPassenger LinkedList*
+ * \return int
+ *
+ */
 int controller_removePassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Listar pasajeros
@@ -36,7 +56,7 @@ int controller_removePassenger(LinkedList* pArrayListPassenger);
  * \return int
  *
  */
-int controller_listPassenger(LinkedList* pArrayListPassenger);
+int controller_ListPassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Ordenar pasajeros
  *
@@ -47,18 +67,22 @@ int controller_listPassenger(LinkedList* pArrayListPassenger);
  */
 int controller_sortPassenger(LinkedList* pArrayListPassenger);
 
+/** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto).
+ *
+ * \param path char*
+ * \param pArrayListPassenger LinkedList*
+ * \return int
+ *
+ */
 int controller_saveAsText(char* path , LinkedList* pArrayListPassenger);
 
+/** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).
+ *
+ * \param path char*
+ * \param pArrayListPassenger LinkedList*
+ * \return int
+ *
+ */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListPassenger);
 
-int controller_findPassengerById(LinkedList* pArrayListPassenger, int id);
-
-int controller_getNextId(LinkedList* pArrayListPassenger);
-
-int controller_compareIds(void* first, void* second);
-
-int controller_compareNames(void* first, void* second);
-
-int controller_compareLastNames(void* first, void* second);
-
-int controller_comparePrices(void* first, void* second);
+#endif

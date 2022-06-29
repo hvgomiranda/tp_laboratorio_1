@@ -1,4 +1,10 @@
-/** \brief Parsea los datos los datos de los pasajeros desde el archivo data.csv (modo texto).
+#ifndef PARSER_H_
+#define PARSER_H_
+
+#include "LinkedList.h"
+#include "Passenger.h"
+
+/** \brief Parsea los datos de los pasajeros desde el archivo data.csv (modo texto).
  *
  * \param path char*
  * \param pArrayListPassenger LinkedList*
@@ -7,7 +13,7 @@
  */
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger);
 
-/** \brief Parsea los datos los datos de los pasajeros desde el archivo data.bin (modo binario).
+/** \brief Parsea los datos de los pasajeros desde el archivo data.csv (modo binario).
  *
  * \param path char*
  * \param pArrayListPassenger LinkedList*
@@ -15,5 +21,5 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger);
  *
  */
 int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger);
-int parser_PassengerToText(FILE* pFile, LinkedList* pArrayListPassenger);
-int parser_PassengerToBinary(FILE* pFile, LinkedList* pArrayListPassenger);
+
+#endif /* PARSER_H_ */

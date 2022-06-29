@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "LinkedList.h"
 #include "Controller.h"
-#include "Passenger.h"
-#include "Parser.h"
-#include "utn.h"
 
 /****************************************************
     Menu:
@@ -22,216 +16,101 @@
 
 int main()
 {
-	setbuf(stdout, NULL);
+    setbuf(stdout,NULL);
 
-	int* option = (int*) malloc(sizeof(int));
-	int* fail = (int*) malloc(sizeof(int));
-	int* nextId = (int*) malloc(sizeof(int));
-    LinkedList* pArrayListPassenger = ll_newLinkedList();
+    LinkedList* passengerList = ll_newLinkedList();
+    char pathAux[100];
+    int option,
+		binSave=0,
+		txtSave=0,
+		loadFlag=0;
 
-    if(nextId!=NULL && pArrayListPassenger!=NULL)
-    {
-    	do
-    	{
-    		system("cls");
-			printf("*** Menu de Opciones ***\n\n");
-			printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto)\n");
-			printf("2. Cargar los datos de los empleados desde el archivo data.csv (modo binario)\n");
-			printf("3. Alta de empleado\n");
-			printf("4. Modificar datos de empleado\n");
-			printf("5. Baja de empleado\n");
-			printf("6. Listar empleados\n");
-			printf("7. Ordenar empleados\n");
-			printf("8. Guardar los datos de los empleados en el archivo data.csv (modo texto)\n");
-			printf("9. Guardar los datos de los empleados en el archivo data.csv (modo binario)\n");
-			printf("10. Finalizar programa\n\n");
-			printf("Elija una opcion: ");
-			scanf("%d", option);
+    do{
+    	option=optionMenu();
+        switch(option)
+        {
+            case 1:
+            	if(loadFlag==0)
+            	{
+            		if(controller_loadFromText(getPath(pathAux, 1, "CSV"),passengerList)==0)
+            			loadFlag=1;
+            	}
+            	else
+            		puts("\nArchivo ya cargado. ...");
+                break;
 
-			switch(*option)
-			{
-				case 1:
-					if(ll_isEmpty(pArrayListPassenger) || ask("Ya hay empleados cargados, desea sobreescribirlos?"))
-					{
-						if(!controller_loadFromText("data.csv", pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-						else
-						{
-							system("cls");
-							printf("Datos cargados exitosamente\n");
-							system("pause");
-						}
-					}
-					break;
+            case 2:
+            	if(loadFlag==0)
+            	{
+					if(controller_loadFromBinary(getPath(pathAux, 1, "BIN"), passengerList)==0)
+						loadFlag=1;
+				}
+				else
+					puts("\nArchivo ya cargado. ...");
+            	break;
 
-				case 2:
-					if(ll_isEmpty(pArrayListPassenger) || ask("Ya hay empleados cargados, desea sobreescribirlos?"))
-					{
-						if(!controller_loadFromBinary("data.bin", pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-						else
-						{
-							system("cls");
-							printf("Datos cargados exitosamente\n");
-							system("pause");
-						}
-					}
-					break;
+            case 3:
+            	controller_addPassenger(passengerList);
+            	break;
 
-				case 3:
-					*nextId = controller_getNextId(pArrayListPassenger) + 1;
+            case 4:
+            	if(ll_isEmpty(passengerList)==0)
+            		controller_editPassenger(passengerList);
+            	else
+            		puts("\nTodavia no se ha cargado ningun pasajero, no es posible realizar esta accion.");
+            	break;
 
-					if(!controller_addPassenger(pArrayListPassenger, *nextId))
-					{
-						system("cls");
-						printf("Hubo un error\n");
-						system("pause");
-					}
-					else
-					{
-						system("cls");
-						printf("Alta exitosa\n");
-						system("pause");
-					}
-					break;
+            case 5:
+            	if(ll_isEmpty(passengerList)==0)
+					controller_removePassenger(passengerList);
+            	else
+            		puts("\nTodavia no se ha cargado ningun pasajero, no es posible realizar esta accion.");
+            	break;
 
-				case 4:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						if(!controller_editPassenger(pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
-					break;
+            case 6:
+            	if(ll_isEmpty(passengerList)==0)
+            		controller_ListPassenger(passengerList);
+            	else
+            		puts("\nNo es posible mostrar el listado, todavia no se ha cargado ningun pasajero.");
+            	break;
 
-				case 5:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						if(!controller_removePassenger(pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
-					break;
-				case 6:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						controller_listPassenger(pArrayListPassenger);
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
-					break;
-				case 7:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						controller_sortPassenger(pArrayListPassenger);
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
-					break;
-				case 8:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						if(!controller_saveAsText("data.csv", pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-						else
-						{
-							system("cls");
-							printf("Los datos se guardaron exitosamente\n");
-							system("pause");
-						}
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
+            case 7:
+            	if(ll_isEmpty(passengerList)==0)
+            		controller_sortPassenger(passengerList);
+            	else
+            		puts("\nNo es posible ordenar la lista, se han cargado menos de dos pasajeros.");
+            	break;
 
-					break;
-				case 9:
-					if(!ll_isEmpty(pArrayListPassenger))
-					{
-						if(!controller_saveAsBinary("data.bin", pArrayListPassenger))
-						{
-							system("cls");
-							printf("Hubo un error\n");
-							system("pause");
-						}
-						else
-						{
-							system("cls");
-							printf("Los datos se guardaron exitosamente\n");
-							system("pause");
-						}
-					}
-					else
-					{
-						system("cls");
-						printf("No hay empleados cargados\n");
-						system("pause");
-					}
+            case 8:
+            	if(ll_isEmpty(passengerList)==0)
+            	{
+					if(controller_saveAsText(getPath(pathAux, 2, "CSV"), passengerList)==0)
+						txtSave=1;
+            	}
+            	else
+            		puts("\nNo es posible guardar el archivo, todavia no se ha cargado ningun pasajero.");
+            	break;
 
-					break;
-				case 10:
-					system("cls");
-					printf("Saliendo\n\n");
-					system("pause");
-					break;
-				default:
-					system("cls");
-					printf("Opcion invalida\n");
-					system("pause");
-					break;
-			}
-    	}while(*option != 10);
-    }
-    else
-    {
-    	printf("No se pudo inicializar el programa.");
-    }
+            case 9:
+            	if(ll_isEmpty(passengerList)==0)
+            	{
+					if(controller_saveAsBinary(getPath(pathAux, 2, "BIN"), passengerList)==0)
+						binSave=1;
+            	}
+            	else
+            		puts("\nNo es posible guardar el archivo, todavia no se ha cargado ningun pasajero.");
+            	break;
 
-    free(option);
-    free(fail);
-    free(nextId);
-
-    return 0;
+            case 10:
+            	system("cls");
+            	printf("Saliendo...\n");
+            	system("pause");
+            	break;
+        }
+        if(option!=10)
+        {
+        	puts("\nVolviendo al Menu...");
+        	system("\npause");
+        }
+    }while(option != 10);
 }
-
