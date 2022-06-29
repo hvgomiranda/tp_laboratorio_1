@@ -132,4 +132,6 @@ void exitMessage(void);
 
 int sortMenu(void);
 
+int optionMenu(void);
+
 #endif /* UTN_H_ */
